@@ -1,0 +1,131 @@
+ body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FFF8E1;
+        }
+
+        .header {
+            background-color: #006837;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .logout-btn {
+            background-color: #1B5E20;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #1B5E20;
+            position: absolute;
+            top: 75px;
+            bottom: 0;
+            left: 0;
+            padding: 20px;
+        }
+
+        .sidebar button {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #2E7D32;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            
+        }
+
+        .main {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #FFCA28;
+            padding: 20px;
+            flex: 1;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background-color: #AED581;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .delete-btn {
+            color: red;
+            cursor: pointer;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 40%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        .btn-agregar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-agregar:hover {
+            background-color: #45a049;
+        }
