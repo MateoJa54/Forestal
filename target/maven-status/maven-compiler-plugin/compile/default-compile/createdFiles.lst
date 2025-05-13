@@ -1,4 +1,7 @@
+com\espe\app\forestal\dao\EspecieDao.class
 com\espe\app\forestal\model\EstadoActividad.class
+com\espe\app\forestal\controller\ActividadController.class
+com\espe\app\forestal\controller\EspecieController.class
 com\espe\app\forestal\model\EspecieArbol.class
 com\espe\app\forestal\controller\ZonaController.class
 com\espe\app\forestal\model\EstadoConservacion.class
@@ -6,6 +9,7 @@ com\espe\app\forestal\resources\JakartaEE10Resource.class
 com\espe\app\forestal\dao\TestZonaDao.class
 com\espe\app\forestal\dao\ZonaDao.class
 com\espe\app\forestal\model\ActividadConservacion.class
+com\espe\app\forestal\dao\ActividadDao.class
 com\espe\app\forestal\dao\util\ConnectionBdd.class
 com\espe\app\forestal\JakartaRestConfiguration.class
 com\espe\app\forestal\model\ZonaForestal.class
