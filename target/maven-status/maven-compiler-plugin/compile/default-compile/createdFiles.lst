@@ -9,6 +9,7 @@ com\espe\app\forestal\model\EstadoConservacion.class
 com\espe\app\forestal\resources\JakartaEE10Resource.class
 com\espe\app\forestal\dao\TestZonaDao.class
 com\espe\app\forestal\dao\ZonaDao.class
+com\espe\app\forestal\dao\TestActividadDao.class
 com\espe\app\forestal\model\ActividadConservacion.class
 com\espe\app\forestal\dao\ActividadDao.class
 com\espe\app\forestal\dao\util\ConnectionBdd.class
