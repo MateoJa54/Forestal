@@ -106,7 +106,7 @@
 
     <nav>
         <a href="#">Inicio</a>
-        <a href="#">Zonas Forestales</a>
+        <a href="${pageContext.request.contextPath}/Zona">Zonas Forestales</a> 
         <a href="#">Especies</a>
         <a href="#">Actividades</a>
         <a href="#">Contacto</a>

@@ -1,6 +1,7 @@
 com\espe\app\forestal\dao\EspecieDao.class
 com\espe\app\forestal\model\EstadoActividad.class
 com\espe\app\forestal\controller\ActividadController.class
+com\espe\app\forestal\controller\HomeController.class
 com\espe\app\forestal\controller\EspecieController.class
 com\espe\app\forestal\model\EspecieArbol.class
 com\espe\app\forestal\controller\ZonaController.class
