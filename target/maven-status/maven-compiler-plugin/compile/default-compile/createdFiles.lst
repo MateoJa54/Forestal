@@ -14,5 +14,6 @@ com\espe\app\forestal\dao\ActividadDao.class
 com\espe\app\forestal\dao\util\ConnectionBdd.class
 com\espe\app\forestal\JakartaRestConfiguration.class
 com\espe\app\forestal\model\ZonaForestal.class
+com\espe\app\forestal\dao\TestEspecieDao.class
 com\espe\app\forestal\model\ZonaEspecie.class
 com\espe\app\forestal\model\ZonaEspecieId.class
