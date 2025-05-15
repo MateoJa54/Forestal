@@ -23,7 +23,7 @@ public class EspecieController extends HttpServlet {
         switch (option) {
             case "new":
                 // formulario en blanco
-                req.getRequestDispatcher("/WEB-INF/views/formEspecie.jsp")
+                req.getRequestDispatcher("/WEB-INF/views/Especie.jsp")
                    .forward(req, resp);
                 break;
 
@@ -44,7 +44,7 @@ public class EspecieController extends HttpServlet {
             default:  // getAll
                 List<EspecieArbol> list = especieDao.findAll();
                 req.setAttribute("especies", list);
-                req.getRequestDispatcher("/WEB-INF/views/especie.jsp")
+                req.getRequestDispatcher("/WEB-INF/views/Especie.jsp")
                    .forward(req, resp);
         }
     }

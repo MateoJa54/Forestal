@@ -104,6 +104,59 @@
                     </div>
                 </div>
 
+                <!-- Modal de Especies de Árboles asociadas -->
+                <div id="especieZonaModal" class="modal">
+                    <div class="modal-content p-4 bg-light rounded shadow w-75 mx-auto">
+                        <span class="btn-close float-end" onclick="document.getElementById('especieZonaModal').style.display = 'none'"></span>
+                        <h2>Gestión de Especies en la Zona</h2>
+
+                        <div class="mt-3">
+                            <h5 class="mb-3">Agregar especie a esta zona:</h5>
+                            <form id="formAgregarEspecie" method="post" action="${pageContext.request.contextPath}/ZonaEspecie">
+                                <input type="hidden" name="zonaId" id="zonaIdEspecie" />
+
+                                <div class="mb-3">
+                                    <label for="especieSelect" class="form-label">Seleccione una especie:</label>
+                                    <select id="especieSelect" name="especieId" class="form-select" required>
+                                        <!-- Opciones se llenarán dinámicamente desde el backend -->
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-success">Agregar Especie</button>
+                            </form>
+                        </div>
+
+                        <div class="mt-5">
+                            <h5>Especies registradas en esta zona:</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover mt-2">
+                                    <thead class="table-success text-center">
+                                        <tr>
+                                            <th>Nombre común</th>
+                                            <th>Nombre Cientifico</th>
+                                            <th>Densidad</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaEspeciesZona">
+                                        <!-- Filas se llenarán dinámicamente desde backend o por JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal de Programas/Zonas Protegidas -->
+                <div id="programaModal" class="modal">
+                    <div class="modal-content p-4 bg-light rounded shadow">
+                        <span class="btn-close float-end" onclick="document.getElementById('programaModal').style.display = 'none'"></span>
+                        <h2>Programas de Conservación / Zonas Protegidas</h2>
+                    </div>
+                </div>
+
+
 
                 <h2>Zonas Registradas</h2>
                 <!-- Depuración: mostrar total encontradas -->
@@ -111,8 +164,15 @@
                     <p class="countZone">No hay zonas registradas.</p>
                 </c:if>
                 <c:if test="${not empty zonas}">
-                    <p class="countZone" >Total de zonas: ${fn:length(zonas)}</p>
+                    <p class="countZone">Total de zonas: ${fn:length(zonas)}</p>
                 </c:if>
+
+                <!-- Barra de búsqueda -->
+                <div class="input-group mb-3 w-50">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" id="busquedaZona" placeholder="Buscar por Nombre...">
+                </div>
+
 
                 <div class="table-responsive rounded shadow-sm mt-4">
                     <table class="table table-hover align-middle">
@@ -141,9 +201,16 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
 
-                                        <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalVisualizar${zona.zonaId}">
-                                            <i class="bi bi-eye-fill"></i>
+                                        <!-- Botón para abrir modal de árboles -->
+                                        <button class="btn btn-sm btn-secondary" onclick="openEspecieModal(${zona.zonaId})">
+                                            <i class="bi bi-tree"></i>
                                         </button>
+
+                                        <!-- Botón para abrir modal de zonas protegidas -->
+                                        <button class="btn btn-sm btn-dark" onclick="openProgramaModal(${zona.zonaId})">
+                                            <i class="bi bi-shield-lock-fill"></i>
+                                        </button>
+
 
                                         <!-- Botón de eliminar -->
                                         <form action="${pageContext.request.contextPath}/Zona" method="get" style="display:inline;">
@@ -185,17 +252,41 @@
                 document.getElementById('editZonaModal').style.display = 'block';
             }
 
+            function openEspecieModal(zonaId) {
+                document.getElementById('especieZonaModal').style.display = 'block';
+            }
+
+            function openProgramaModal(zonaId) {
+                document.getElementById('programaModal').style.display = 'block';
+            }
+
+
             // Cierra los modales al hacer clic fuera de ellos
             window.onclick = function (event) {
-                const newModal = document.getElementById('zonaModal');
-                const editModal = document.getElementById('editZonaModal');
-                if (event.target == newModal)
-                    newModal.style.display = "none";
-                if (event.target == editModal)
-                    editModal.style.display = "none";
+                ['zonaModal', 'editZonaModal', 'especieModal', 'especieZonaModal', 'programaModal'].forEach(function (id) {
+                    const modal = document.getElementById(id);
+                    if (modal && event.target === modal) {
+                        modal.style.display = "none";
+                    }
+                });
             }
-        </script>
+            
+                document.getElementById("busquedaZona").addEventListener("keyup", function () {
+        const filtro = this.value.toLowerCase();
+        const filas = document.querySelectorAll("tbody.table-light tr");
 
+        filas.forEach(fila => {
+            const nombre = fila.cells[0].textContent.toLowerCase(); // Nombre
+
+            if (nombre.includes(filtro)) {
+                fila.style.display = "";
+            } else {
+                fila.style.display = "none";
+            }
+        });
+    });
+
+        </script>
 
     </body>
 </html>
