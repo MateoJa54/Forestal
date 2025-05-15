@@ -1,6 +1,8 @@
 package com.espe.app.forestal.controller;
 
+import com.espe.app.forestal.dao.EspecieDao;
 import com.espe.app.forestal.dao.ZonaDao;
+import com.espe.app.forestal.model.EspecieZonaDetalle;
 import com.espe.app.forestal.model.ZonaForestal;
 import java.io.IOException;
 import java.util.List;
@@ -39,6 +41,20 @@ public class ZonaController extends HttpServlet {
                 zonaDao.delete(idDel);
                 resp.sendRedirect(req.getContextPath() + "/Zona");
                 break;
+            case "listarEspeciesZona":
+                Integer zonaIdEspecies = Integer.parseInt(req.getParameter("zonaId"));
+                List<EspecieZonaDetalle> especiesZona =
+                    new EspecieDao().findEspeciesByZonaId(zonaIdEspecies);
+                req.setAttribute("especiesZona", especiesZona);
+
+                // Recarga también todas las zonas
+                List<ZonaForestal> todas = zonaDao.findAll();
+                req.setAttribute("zonas", todas);
+
+                req.getRequestDispatcher("/WEB-INF/views/zonas.jsp")
+                   .forward(req, resp);
+                return;
+
 
             default:  // getAll
                 List<ZonaForestal> list = zonaDao.findAll();
@@ -51,11 +67,11 @@ public class ZonaController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         String idParam = req.getParameter("zonaId");
         Integer id = (idParam == null || idParam.isEmpty())
-                     ? null
-                     : Integer.parseInt(idParam);
+                ? null
+                : Integer.parseInt(idParam);
 
         ZonaForestal zona = new ZonaForestal();
         if (id != null) zona.setZonaId(id);

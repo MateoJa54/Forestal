@@ -58,38 +58,5 @@ public class TestZonaDao {
             System.out.println("No se encontró ninguna zona con ID " + idBuscar);
         }
         System.out.println();
-
-        // Opcional: Prueba de inserción
-        /*
-        System.out.println("==== PRUEBA DE SAVE() ====");
-        ZonaForestal nuevaZona = new ZonaForestal();
-        nuevaZona.setNombre("Zona Prueba");
-        nuevaZona.setUbicacion("Ubicación Prueba");
-        nuevaZona.setAreaHectareas(new java.math.BigDecimal("12.34"));
-        nuevaZona.setTipoVegetacion("Bosque mixto");
-        nuevaZona.setCoordenadas("0.000,0.000");
-        nuevaZona.setFechaRegistro(java.time.LocalDate.now());
-        boolean guardado = zonaDao.save(nuevaZona);
-        System.out.println(guardado ? "Zona guardada exitosamente" : "Error al guardar la zona");
-        System.out.println();
-        */
-
-        // Opcional: Prueba de actualización
-        /*
-        System.out.println("==== PRUEBA DE UPDATE() ====");
-        if (zonaEncontrada != null) {
-            zonaEncontrada.setNombre(zonaEncontrada.getNombre() + " Modificada");
-            boolean actualizado = zonaDao.update(zonaEncontrada);
-            System.out.println(actualizado ? "Zona actualizada exitosamente" : "Error al actualizar la zona");
-        }
-        System.out.println();
-        */
-
-        // Opcional: Prueba de eliminación
-        /*
-        System.out.println("==== PRUEBA DE DELETE() ====");
-        boolean eliminado = zonaDao.delete(idBuscar);
-        System.out.println(eliminado ? "Zona eliminada exitosamente" : "Error al eliminar la zona o no existe");
-        */
     }
 }

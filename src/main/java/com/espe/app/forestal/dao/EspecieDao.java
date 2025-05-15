@@ -176,7 +176,7 @@ public class EspecieDao {
     /**
      * Mapea un registro ResultSet a un objeto EspecieArbol
      */
-    private EspecieArbol mapRowEspecieArbol(ResultSet rs) throws SQLException {
+    public EspecieArbol mapRowEspecieArbol(ResultSet rs) throws SQLException {
         EspecieArbol e = new EspecieArbol();
         e.setEspecieId(rs.getInt("especie_id"));
         e.setNombreCientifico(rs.getString("nombre_cientifico"));
@@ -200,7 +200,7 @@ public class EspecieDao {
     /**
      * Mapea un registro ResultSet a un objeto EspecieZonaDetalle.
      */
-    private EspecieZonaDetalle mapRowEspecieZonaDetalle(ResultSet rs) throws SQLException {
+    public EspecieZonaDetalle mapRowEspecieZonaDetalle(ResultSet rs) throws SQLException {
         EspecieZonaDetalle detalle = new EspecieZonaDetalle();
         detalle.setEspecieId(rs.getInt("especie_id"));
         detalle.setNombreCientifico(rs.getString("nombre_cientifico"));
