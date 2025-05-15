@@ -3,6 +3,7 @@ package com.espe.app.forestal.dao;
 import com.espe.app.forestal.dao.util.ConnectionBdd;
 import com.espe.app.forestal.model.EspecieArbol;
 import com.espe.app.forestal.model.EstadoConservacion;
+import com.espe.app.forestal.model.EspecieZonaDetalle;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -136,5 +137,75 @@ public class EspecieDao {
         e.setDescripcion(rs.getString("descripcion"));
         e.setImagenUrl(rs.getString("imagen_url"));
         return e;
+    }
+    
+      /**
+     * Obtiene las especies asociadas a un ID de Zona Forestal.
+     * @param zonaId ID de la zona forestal.
+     * @return Lista de EspecieZonaDetalle con la información de las especies y su densidad.
+     */
+    public List<EspecieZonaDetalle> findEspeciesByZonaId(Integer zonaId) {
+        List<EspecieZonaDetalle> lista = new ArrayList<>();
+        String sql = "SELECT " +
+                     "    ea.especie_id, " +
+                     "    ea.nombre_cientifico, " +
+                     "    ea.nombre_comun, " +
+                     "    ze.densidad " +
+                     "FROM Especie_Arbol ea " +
+                     "INNER JOIN Zona_Especie ze " +
+                     "    ON ea.especie_id = ze.especie_id " +
+                     "WHERE " +
+                     "    ze.zona_id = ?";
+
+        try (Connection conn = ConnectionBdd.getConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, zonaId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    EspecieZonaDetalle detalle = mapRowEspecieZonaDetalle(rs);
+                    lista.add(detalle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    /**
+     * Mapea un registro ResultSet a un objeto EspecieArbol
+     */
+    private EspecieArbol mapRowEspecieArbol(ResultSet rs) throws SQLException {
+        EspecieArbol e = new EspecieArbol();
+        e.setEspecieId(rs.getInt("especie_id"));
+        e.setNombreCientifico(rs.getString("nombre_cientifico"));
+        e.setNombreComun(rs.getString("nombre_comun"));
+        e.setFamilia(rs.getString("familia"));
+
+        // Mapear estado_conservacion comparando etiquetas
+        String estadoLabel = rs.getString("estado_conservacion");
+        for (EstadoConservacion ec : EstadoConservacion.values()) {
+            if (ec.toString().equals(estadoLabel)) {
+                e.setEstadoConservacion(ec);
+                break;
+            }
+        }
+
+        e.setDescripcion(rs.getString("descripcion"));
+        e.setImagenUrl(rs.getString("imagen_url"));
+        return e;
+    }
+
+    /**
+     * Mapea un registro ResultSet a un objeto EspecieZonaDetalle.
+     */
+    private EspecieZonaDetalle mapRowEspecieZonaDetalle(ResultSet rs) throws SQLException {
+        EspecieZonaDetalle detalle = new EspecieZonaDetalle();
+        detalle.setEspecieId(rs.getInt("especie_id"));
+        detalle.setNombreCientifico(rs.getString("nombre_cientifico"));
+        detalle.setNombreComun(rs.getString("nombre_comun"));
+        detalle.setDensidad(rs.getDouble("densidad"));
+        return detalle;
     }
 }

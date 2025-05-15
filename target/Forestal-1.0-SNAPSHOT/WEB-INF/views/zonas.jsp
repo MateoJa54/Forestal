@@ -135,7 +135,6 @@
                                             <th>Nombre común</th>
                                             <th>Nombre Cientifico</th>
                                             <th>Densidad</th>
-                                            <th>Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tablaEspeciesZona">
