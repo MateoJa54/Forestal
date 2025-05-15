@@ -5,6 +5,7 @@ import com.espe.app.forestal.dao.ZonaDao;
 import com.espe.app.forestal.model.ActividadConservacion;
 import com.espe.app.forestal.model.EstadoActividad;
 import com.espe.app.forestal.model.ZonaForestal;
+import com.espe.app.validator.ActividadValidator;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -16,12 +17,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @WebServlet(name = "ActividadController", urlPatterns = {"/Actividad"})
 public class ActividadController extends HttpServlet {
 
     private final ActividadDao actividadDao = new ActividadDao();
     private final ZonaDao zonaDao = new ZonaDao(); // Para obtener las zonas
+     private final ActividadValidator actividadValidator = new ActividadValidator();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -67,14 +70,13 @@ public class ActividadController extends HttpServlet {
         }
     }
 
-    @Override
+   @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
 
         String idParam = req.getParameter("actividadId");
         Integer id = (idParam == null || idParam.isEmpty()) ? null : Integer.parseInt(idParam);
 
-        // Datos del formulario
         ActividadConservacion actividad = new ActividadConservacion();
         if (id != null) {
             actividad.setActividadId(id);
@@ -92,22 +94,28 @@ public class ActividadController extends HttpServlet {
         actividad.setPresupuesto(new BigDecimal(req.getParameter("presupuesto")));
         actividad.setEstado(EstadoActividad.valueOf(req.getParameter("estado").toUpperCase()));
 
-        // Zona relacionada (la obtenemos por ID y la asignamos al modelo)
         Integer zonaId = Integer.parseInt(req.getParameter("zonaId"));
-        ZonaForestal zona = zonaDao.findById(zonaId);  // Mejor que solo crear nuevo con ID
+        ZonaForestal zona = zonaDao.findById(zonaId);
         if (zona == null) {
-            // Zona no existe, podrías lanzar error o manejarlo
             throw new ServletException("Zona con id " + zonaId + " no existe.");
         }
         actividad.setZona(zona);
 
-        // Guardar o actualizar
-        if (id == null) {
-            actividadDao.save(actividad);
-        } else {
-            actividadDao.update(actividad);
-        }
+        // Validación
+        List<String> errores = actividadValidator.validate(actividad);
 
-        resp.sendRedirect(req.getContextPath() + "/Actividad");
+        if (errores.isEmpty()) {
+            if (id == null) {
+                actividadDao.save(actividad);
+            } else {
+                actividadDao.update(actividad);
+            }
+            resp.sendRedirect(req.getContextPath() + "/Actividad");
+        } else {
+            req.setAttribute("errores", errores);
+            req.setAttribute("actividad", actividad);
+            req.setAttribute("zonas", zonaDao.findAll());
+            req.getRequestDispatcher("/WEB-INF/views/Actividad.jsp").forward(req, resp);
+        }
     }
 }

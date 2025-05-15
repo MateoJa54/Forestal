@@ -37,6 +37,15 @@
                         <span class="btn-close float-end" onclick="document.getElementById('actividadModal').style.display = 'none'"></span>
                         <h2>Registrar Actividad de Conservación</h2>
 
+                        <c:if test="${not empty errores}">
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <c:forEach var="error" items="${errores}">
+                                        <li>${error}</li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </c:if>
 
                         <form action="${pageContext.request.contextPath}/Actividad" method="post">
                             <input type="hidden" name="option" value="new" />
@@ -53,17 +62,17 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Fecha de Inicio:</label>
-                                <input type="date" name="fechaInicio" class="form-control" required />
+                                <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" required />
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Fecha de Fin:</label>
-                                <input type="date" name="fechaFin" class="form-control" />
+                                <input type="date" id="fechaFin" name="fechaFin" class="form-control" />
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Presupuesto (USD):</label>
-                                <input type="number" step="0.01" name="presupuesto" class="form-control" />
+                                <input type="number" id="presupuesto" min="500" step="0.01" name="presupuesto" class="form-control" required />
                             </div>
 
                             <div class="mb-3">
@@ -344,8 +353,11 @@
                 document.getElementById('viewActividadModal').style.display = 'block';
             }
 
-
-
+        document.getElementById("fechaInicio").addEventListener("change", function() {
+             const inicio = this.value;
+             const fechaFin = document.getElementById("fechaFin");
+             fechaFin.min = inicio; // Establece la fecha mínima de fin
+         });
 
         </script>
 
