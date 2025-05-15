@@ -167,7 +167,7 @@
                 <h2>Especies Registradas</h2>
                 <!-- Depuración: mostrar total encontradas -->
                 <c:if test="${empty especies}">
-                    <p class="countZone">No hay zonas especies.</p>
+                    <p class="countZone">No hay especies.</p>
                 </c:if>
                 <c:if test="${not empty especies}">
                     <p class="countZone">Total de especies: ${fn:length(especies)}</p>

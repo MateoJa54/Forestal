@@ -108,8 +108,7 @@
         <a href="#">Inicio</a>
         <a href="${pageContext.request.contextPath}/Zona">Zonas Forestales</a> 
         <a href="${pageContext.request.contextPath}/Especie">Especies</a>
-        <a href="#">Actividades</a>
-        <a href="#">Contacto</a>
+        <a href="${pageContext.request.contextPath}/Actividad">Actividades</a>
     </nav>
 
     <div class="banner"></div>
