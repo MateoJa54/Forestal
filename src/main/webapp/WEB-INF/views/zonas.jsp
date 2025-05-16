@@ -32,32 +32,78 @@
                 Agregar Zona
             </button>
 
-            <!-- Modal Registrar Zona -->
-            <div id="zonaModal" class="modal">
-                <div class="modal-content p-4 bg-light rounded shadow">
-                    <span class="btn-close float-end" onclick="document.getElementById('zonaModal').style.display='none'"></span>
-                    <h2>Registrar nueva zona forestal</h2>
-                    <form action="${pageContext.request.contextPath}/Zona" method="post">
-                        <input type="hidden" name="option" value="new" />
-                        <!-- campos... -->
-                        <button type="submit" class="btn btn-primary">Guardar Zona</button>
-                    </form>
-                </div>
+        <!-- Modal Registrar Zona -->
+        <div id="zonaModal" class="modal">
+            <div class="modal-content p-4 bg-light rounded shadow">
+                <span class="btn-close float-end" onclick="document.getElementById('zonaModal').style.display='none'"></span>
+                <h2>Registrar nueva zona forestal</h2>
+                <form action="${pageContext.request.contextPath}/Zona" method="post">
+                    <input type="hidden" name="option" value="new" />
+                    <div class="mb-3">
+                        <label class="form-label">Nombre:</label>
+                        <input type="text" name="nombre" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ubicación:</label>
+                        <input type="text" name="ubicacion" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Área (hectáreas):</label>
+                        <input type="number" step="0.01" name="areaHectareas" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de vegetación:</label>
+                        <input type="text" name="tipoVegetacion" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Coordenadas:</label>
+                        <input type="text" name="coordenadas" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Registro:</label>
+                        <input type="date" name="fechaRegistro" class="form-control" value="<%= java.time.LocalDate.now() %>" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Zona</button>
+                </form>
             </div>
+        </div>
 
-            <!-- Modal Editar Zona -->
-            <div id="editZonaModal" class="modal">
-                <div class="modal-content p-4 bg-light rounded shadow">
-                    <span class="btn-close float-end" onclick="document.getElementById('editZonaModal').style.display='none'"></span>
-                    <h2>Editar zona forestal</h2>
-                    <form action="${pageContext.request.contextPath}/Zona" method="post">
-                        <input type="hidden" name="option" value="update" />
-                        <input type="hidden" name="zonaId" id="editZonaId" />
-                        <!-- campos con IDs editNombre, editUbicacion, etc. -->
-                        <button type="submit" class="btn btn-success">Actualizar Zona</button>
-                    </form>
-                </div>
+        <!-- Modal Editar Zona -->
+        <div id="editZonaModal" class="modal">
+            <div class="modal-content p-4 bg-light rounded shadow">
+                <span class="btn-close float-end" onclick="document.getElementById('editZonaModal').style.display='none'"></span>
+                <h2>Editar zona forestal</h2>
+                <form action="${pageContext.request.contextPath}/Zona" method="post">
+                    <input type="hidden" name="option" value="update" />
+                    <input type="hidden" name="zonaId" id="editZonaId" />
+                    <div class="mb-3">
+                        <label class="form-label">Nombre:</label>
+                        <input type="text" name="nombre" id="editNombre" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ubicación:</label>
+                        <input type="text" name="ubicacion" id="editUbicacion" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Área (hectáreas):</label>
+                        <input type="number" step="0.01" name="areaHectareas" id="editArea" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de vegetación:</label>
+                        <input type="text" name="tipoVegetacion" id="editVegetacion" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Coordenadas:</label>
+                        <input type="text" name="coordenadas" id="editCoordenadas" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Registro:</label>
+                        <input type="date" name="fechaRegistro" id="editFecha" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-success">Actualizar Zona</button>
+                </form>
             </div>
+        </div>
 
             <!-- Modal Especies de Árboles -->
             <div id="especieZonaModal" class="modal">
