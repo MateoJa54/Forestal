@@ -115,6 +115,11 @@ public class ActividadController extends HttpServlet {
             req.setAttribute("errores", errores);
             req.setAttribute("actividad", actividad);
             req.setAttribute("zonas", zonaDao.findAll());
+
+            // Cargar la lista de actividades de nuevo para que la tabla se muestre
+            List<ActividadConservacion> list = actividadDao.findAll();
+            req.setAttribute("actividades", list);
+
             req.getRequestDispatcher("/WEB-INF/views/Actividad.jsp").forward(req, resp);
         }
     }

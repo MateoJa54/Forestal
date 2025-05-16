@@ -37,6 +37,26 @@
                         <span class="btn-close float-end" onclick="document.getElementById('actividadModal').style.display = 'none'"></span>
                         <h2>Registrar Actividad de Conservación</h2>
 
+                        <!-- Modal de Alerta de Errores -->
+                            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="errorModalLabel">Errores en el formulario</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul id="errorList">
+                                                <!-- Los errores se cargan aquí desde JavaScript -->
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
                         <c:if test="${not empty errores}">
                             <div class="alert alert-danger">
                                 <ul>
@@ -238,7 +258,7 @@
                                 <th> Nombre</th>
                                 <th> Prespuesto</th>
                                 <th> Estado</th>
-                                <th>️ Acción</th>
+                                <th> Acción</th>
 
                             </tr>
                         </thead>
@@ -353,12 +373,31 @@
                 document.getElementById('viewActividadModal').style.display = 'block';
             }
 
-        document.getElementById("fechaInicio").addEventListener("change", function() {
-             const inicio = this.value;
-             const fechaFin = document.getElementById("fechaFin");
-             fechaFin.min = inicio; // Establece la fecha mínima de fin
-         });
+             document.getElementById('fechaFin').addEventListener('change', function() {
+                const fechaInicio = new Date(document.getElementById('fechaInicio').value);
+                const fechaFin = new Date(this.value);
 
+                if (fechaFin <= fechaInicio) {
+                    alert("La fecha de fin no puede ser anterior o igual a la fecha de inicio.");
+                    this.value = '';
+                }
+            });
+        // Captura de errores enviados desde el backend
+           const errores = ${errores != null ? errores : '[]'};
+
+           if (errores.length > 0) {
+               const errorList = document.getElementById('errorList');
+               errorList.innerHTML = ""; // Limpia la lista
+               errores.forEach(error => {
+                   const li = document.createElement('li');
+                   li.textContent = error;
+                   errorList.appendChild(li);
+               });
+
+               // Mostrar el modal de Bootstrap
+               const modal = new bootstrap.Modal(document.getElementById('errorModal'));
+               modal.show();
+           }
         </script>
 
     </body>
