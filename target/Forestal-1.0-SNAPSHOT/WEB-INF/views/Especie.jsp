@@ -16,9 +16,6 @@
         <div class="header">
             <img src="https://cdn-icons-png.flaticon.com/512/4275/4275503.png" alt="Logo Forestal">
             <h1>SISTEMA DE REGISTRO FORESTAL - ESPECIES </h1>
-            <form action="LogoutServlet" method="post">
-                <button class="logout-btn">Cerrar sesión</button>
-            </form>
         </div>
         <div class="main-content">
             <div class="sidebar">
@@ -26,6 +23,8 @@
                 <button onclick="location.href = '${pageContext.request.contextPath}/Zona'">Zonas Forestales</button>
                 <button onclick="location.href = '${pageContext.request.contextPath}/Especie'">Especies de Árboles</button>
                 <button onclick="location.href = '${pageContext.request.contextPath}/Actividad'">Actividades de Conservación</button>
+                <button onclick="location.href = '${pageContext.request.contextPath}/ZonaEspecie'">Adminsitracion Especie</button>
+
             </div>
 
             <div class="main">
@@ -246,131 +245,145 @@
         </div>
 
 
-       <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            function openEditEspecieModalFromButton(btn) {
-                const id = document.getElementById('editEspecieId');
-                const nombreCientifico = document.getElementById('editNombreCientifico');
-                const nombreComun = document.getElementById('editNombreComun');
-                const familia = document.getElementById('editFamilia');
-                const estadoConservacion = document.getElementById('editEstadoConservacion');
-                const descripcion = document.getElementById('editDescripcion');
-                const imagenUrl = document.getElementById('editImagenUrl');
-                const modal = document.getElementById('editEspecieModal');
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                function openEditEspecieModalFromButton(btn) {
+                    const id = document.getElementById('editEspecieId');
+                    const nombreCientifico = document.getElementById('editNombreCientifico');
+                    const nombreComun = document.getElementById('editNombreComun');
+                    const familia = document.getElementById('editFamilia');
+                    const estadoConservacion = document.getElementById('editEstadoConservacion');
+                    const descripcion = document.getElementById('editDescripcion');
+                    const imagenUrl = document.getElementById('editImagenUrl');
+                    const modal = document.getElementById('editEspecieModal');
 
-                if (id) id.value = btn.dataset.id || '';
-                if (nombreCientifico) nombreCientifico.value = btn.dataset.nombrecientifico || '';
-                if (nombreComun) nombreComun.value = btn.dataset.nombrecomun || '';
-                if (familia) familia.value = btn.dataset.familia || '';
-                if (estadoConservacion) estadoConservacion.value = btn.dataset.estadoconservacion || '';
-                if (descripcion) descripcion.value = btn.dataset.descripcion || '';
-                if (imagenUrl) imagenUrl.value = btn.dataset.imagenurl || '';
-                if (modal) modal.style.display = 'block';
-            }
-
-            function openViewEspecieModal(btn) {
-                const nombreCientifico = document.getElementById('viewNombreCientifico');
-                const nombreComun = document.getElementById('viewNombreComun');
-                const familia = document.getElementById('viewFamilia');
-                const estadoConservacion = document.getElementById('viewEstadoConservacion');
-                const descripcion = document.getElementById('viewDescripcion');
-                const imagen = document.getElementById('viewImagen');
-                const modal = document.getElementById('viewEspecieModal');
-
-                if (nombreCientifico) nombreCientifico.value = btn.dataset.nombrecientifico || '';
-                if (nombreComun) nombreComun.value = btn.dataset.nombrecomun || '';
-                if (familia) familia.value = btn.dataset.familia || '';
-                if (estadoConservacion) estadoConservacion.value = btn.dataset.estadoconservacion || '';
-                if (descripcion) descripcion.value = btn.dataset.descripcion || '';
-
-                const imagenUrl = btn.dataset.imagenurl;
-                if (imagen) {
-                    imagen.src = (imagenUrl && imagenUrl.trim() !== '') ? imagenUrl : 'ruta/a/imagen-default.png';
+                    if (id)
+                        id.value = btn.dataset.id || '';
+                    if (nombreCientifico)
+                        nombreCientifico.value = btn.dataset.nombrecientifico || '';
+                    if (nombreComun)
+                        nombreComun.value = btn.dataset.nombrecomun || '';
+                    if (familia)
+                        familia.value = btn.dataset.familia || '';
+                    if (estadoConservacion)
+                        estadoConservacion.value = btn.dataset.estadoconservacion || '';
+                    if (descripcion)
+                        descripcion.value = btn.dataset.descripcion || '';
+                    if (imagenUrl)
+                        imagenUrl.value = btn.dataset.imagenurl || '';
+                    if (modal)
+                        modal.style.display = 'block';
                 }
 
-                if (modal) modal.style.display = 'block';
-            }
+                function openViewEspecieModal(btn) {
+                    const nombreCientifico = document.getElementById('viewNombreCientifico');
+                    const nombreComun = document.getElementById('viewNombreComun');
+                    const familia = document.getElementById('viewFamilia');
+                    const estadoConservacion = document.getElementById('viewEstadoConservacion');
+                    const descripcion = document.getElementById('viewDescripcion');
+                    const imagen = document.getElementById('viewImagen');
+                    const modal = document.getElementById('viewEspecieModal');
 
-            window.onclick = function (event) {
-                ['especieModal', 'editEspecieModal', 'especieZonaModal', 'viewEspecieModal'].forEach(function (id) {
-                    const modal = document.getElementById(id);
-                    if (modal && event.target === modal) {
-                        modal.style.display = "none";
+                    if (nombreCientifico)
+                        nombreCientifico.value = btn.dataset.nombrecientifico || '';
+                    if (nombreComun)
+                        nombreComun.value = btn.dataset.nombrecomun || '';
+                    if (familia)
+                        familia.value = btn.dataset.familia || '';
+                    if (estadoConservacion)
+                        estadoConservacion.value = btn.dataset.estadoconservacion || '';
+                    if (descripcion)
+                        descripcion.value = btn.dataset.descripcion || '';
+
+                    const imagenUrl = btn.dataset.imagenurl;
+                    if (imagen) {
+                        imagen.src = (imagenUrl && imagenUrl.trim() !== '') ? imagenUrl : 'ruta/a/imagen-default.png';
                     }
-                });
-            };
 
-            const inputBusqueda = document.getElementById("busquedaZona");
-            if (inputBusqueda) {
-                inputBusqueda.addEventListener("keyup", function () {
-                    const filtro = this.value.toLowerCase();
-                    const filas = document.querySelectorAll("tbody.table-light tr");
+                    if (modal)
+                        modal.style.display = 'block';
+                }
 
-                    filas.forEach(fila => {
-                        const nombre = fila.cells[0].textContent.toLowerCase(); // Nombre
-                        fila.style.display = nombre.includes(filtro) ? "" : "none";
+                window.onclick = function (event) {
+                    ['especieModal', 'editEspecieModal', 'especieZonaModal', 'viewEspecieModal'].forEach(function (id) {
+                        const modal = document.getElementById(id);
+                        if (modal && event.target === modal) {
+                            modal.style.display = "none";
+                        }
+                    });
+                };
+
+                const inputBusqueda = document.getElementById("busquedaZona");
+                if (inputBusqueda) {
+                    inputBusqueda.addEventListener("keyup", function () {
+                        const filtro = this.value.toLowerCase();
+                        const filas = document.querySelectorAll("tbody.table-light tr");
+
+                        filas.forEach(fila => {
+                            const nombre = fila.cells[0].textContent.toLowerCase(); // Nombre
+                            fila.style.display = nombre.includes(filtro) ? "" : "none";
+                        });
+                    });
+                }
+
+                function validarFormulario(form) {
+                    function esTextoValido(texto) {
+                        return texto && texto.trim().length > 0;
+                    }
+
+                    const nombreCientifico = form.nombreCientifico.value.trim();
+                    const nombreComun = form.nombreComun.value.trim();
+                    const familia = form.familia.value.trim();
+                    const descripcion = form.descripcion.value.trim();
+                    const estadoConservacion = form.estadoConservacion.value;
+                    const imagenUrl = form.imagenUrl.value.trim();
+
+                    if (!nombreCientifico || /\s/.test(nombreCientifico)) {
+                        alert("El nombre científico no puede estar vacío ni contener espacios.");
+                        return false;
+                    }
+
+                    if (!esTextoValido(nombreComun)) {
+                        alert("El nombre común no puede estar vacío o solo con espacios.");
+                        return false;
+                    }
+
+                    if (!esTextoValido(familia)) {
+                        alert("La familia no puede estar vacía o solo con espacios.");
+                        return false;
+                    }
+
+                    if (!esTextoValido(descripcion)) {
+                        alert("La descripción no puede estar vacía o solo con espacios.");
+                        return false;
+                    }
+
+                    if (!estadoConservacion) {
+                        alert("Debe seleccionar un estado de conservación.");
+                        return false;
+                    }
+
+                    if (imagenUrl && !/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i.test(imagenUrl)) {
+                        alert("La URL de la imagen no es válida o no es una imagen.");
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                // Aplica validación a todos los formularios que envían a "/Especie"
+                document.querySelectorAll("form[action$='/Especie']").forEach(form => {
+                    form.addEventListener("submit", function (e) {
+                        if (!validarFormulario(this)) {
+                            e.preventDefault(); // Evita el envío si no es válido
+                        }
                     });
                 });
-            }
 
-            function validarFormulario(form) {
-                function esTextoValido(texto) {
-                    return texto && texto.trim().length > 0;
-                }
-
-                const nombreCientifico = form.nombreCientifico.value.trim();
-                const nombreComun = form.nombreComun.value.trim();
-                const familia = form.familia.value.trim();
-                const descripcion = form.descripcion.value.trim();
-                const estadoConservacion = form.estadoConservacion.value;
-                const imagenUrl = form.imagenUrl.value.trim();
-
-                if (!nombreCientifico || /\s/.test(nombreCientifico)) {
-                    alert("El nombre científico no puede estar vacío ni contener espacios.");
-                    return false;
-                }
-
-                if (!esTextoValido(nombreComun)) {
-                    alert("El nombre común no puede estar vacío o solo con espacios.");
-                    return false;
-                }
-
-                if (!esTextoValido(familia)) {
-                    alert("La familia no puede estar vacía o solo con espacios.");
-                    return false;
-                }
-
-                if (!esTextoValido(descripcion)) {
-                    alert("La descripción no puede estar vacía o solo con espacios.");
-                    return false;
-                }
-
-                if (!estadoConservacion) {
-                    alert("Debe seleccionar un estado de conservación.");
-                    return false;
-                }
-
-                if (imagenUrl && !/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i.test(imagenUrl)) {
-                    alert("La URL de la imagen no es válida o no es una imagen.");
-                    return false;
-                }
-
-                return true;
-            }
-
-            // Aplica validación a todos los formularios que envían a "/Especie"
-            document.querySelectorAll("form[action$='/Especie']").forEach(form => {
-                form.addEventListener("submit", function (e) {
-                    if (!validarFormulario(this)) {
-                        e.preventDefault(); // Evita el envío si no es válido
-                    }
-                });
+                // Exponer funciones al ámbito global para usarlas en botones
+                window.openEditEspecieModalFromButton = openEditEspecieModalFromButton;
+                window.openViewEspecieModal = openViewEspecieModal;
             });
-
-            // Exponer funciones al ámbito global para usarlas en botones
-            window.openEditEspecieModalFromButton = openEditEspecieModalFromButton;
-            window.openViewEspecieModal = openViewEspecieModal;
-        });
-    </script>
+        </script>
     </body>
 </html>

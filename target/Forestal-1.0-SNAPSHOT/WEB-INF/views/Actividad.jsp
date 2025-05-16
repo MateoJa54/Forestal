@@ -16,9 +16,6 @@
         <div class="header">
             <img src="https://cdn-icons-png.flaticon.com/512/4275/4275503.png" alt="Logo Forestal">
             <h1>SISTEMA DE REGISTRO FORESTAL - ACTIVIDADES DE PROTECCIÓN </h1>
-            <form action="LogoutServlet" method="post">
-                <button class="logout-btn">Cerrar sesión</button>
-            </form>
         </div>
         <div class="main-content">
             <div class="sidebar">
@@ -26,6 +23,7 @@
                 <button onclick="location.href = '${pageContext.request.contextPath}/Zona'">Zonas Forestales</button>
                 <button onclick="location.href = '${pageContext.request.contextPath}/Especie'">Especies de Árboles</button>
                 <button onclick="location.href = '${pageContext.request.contextPath}/Actividad'">Actividades de Conservación</button>
+                <button onclick="location.href = '${pageContext.request.contextPath}/ZonaEspecie'">Adminsitracion Especie</button>
             </div>
 
             <div class="main">
