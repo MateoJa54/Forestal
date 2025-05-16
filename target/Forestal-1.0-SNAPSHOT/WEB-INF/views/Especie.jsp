@@ -304,9 +304,63 @@
                 document.getElementById('viewEspecieModal').style.display = 'block';
             }
 
+            function validarFormulario(form) {
+                function esTextoValido(texto) {
+                    return texto && texto.trim().length > 0;
+                }
+
+                const nombreCientifico = form.nombreCientifico.value.trim();
+                const nombreComun = form.nombreComun.value.trim();
+                const familia = form.familia.value.trim();
+                const descripcion = form.descripcion.value.trim();
+                const estadoConservacion = form.estadoConservacion.value;
+                const imagenUrl = form.imagenUrl.value.trim();
+
+                if (!esTextoValido(nombreCientifico)) {
+                    alert("El nombre científico no puede estar vacío o solo con espacios.");
+                    return false;
+                }
+
+                if (!esTextoValido(nombreComun)) {
+                    alert("El nombre común no puede estar vacío o solo con espacios.");
+                    return false;
+                }
+
+                if (!esTextoValido(familia)) {
+                    alert("La familia no puede estar vacío o solo con espacios.");
+                    return false;
+                }
+                if (!esTextoValido(descripcion)) {
+                    alert("La descripcion no puede estar vacío o solo con espacios.");
+                    return false;
+                }
+
+                if (!estadoConservacion) {
+                    alert("Debe seleccionar un estado de conservación.");
+                    return false;
+                }
+
+                if (imagenUrl && !/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i.test(imagenUrl)) {
+                    alert("La URL de la imagen no es válida o no es una imagen.");
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Aplica a ambos formularios
+            document.querySelectorAll("form[action$='/Especie']").forEach(form => {
+                form.addEventListener("submit", function (e) {
+                    if (!validarFormulario(this)) {
+                        e.preventDefault(); // evita el envío
+                    }
+                });
+            });
 
 
         </script>
+
+
 
     </body>
 </html>
