@@ -10,8 +10,10 @@ com\espe\app\forestal\dao\ActividadDao.class
 com\espe\app\forestal\JakartaRestConfiguration.class
 com\espe\app\forestal\model\EspecieZonaDetalle.class
 com\espe\app\forestal\dao\TestEspecieDao.class
+com\espe\app\forestal\controller\ZonaEspecieController.class
 com\espe\app\forestal\controller\ActividadController.class
 com\espe\app\forestal\controller\HomeController.class
+com\espe\app\forestal\dao\ZonaEspecieDao.class
 com\espe\app\validator\ZonaValidator.class
 com\espe\app\forestal\controller\ZonaController.class
 com\espe\app\validator\ActividadValidator.class

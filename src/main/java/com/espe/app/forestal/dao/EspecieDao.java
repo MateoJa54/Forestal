@@ -200,7 +200,7 @@ public class EspecieDao {
     /**
      * Mapea un registro ResultSet a un objeto EspecieZonaDetalle.
      */
-    public EspecieZonaDetalle mapRowEspecieZonaDetalle(ResultSet rs) throws SQLException {
+    private EspecieZonaDetalle mapRowEspecieZonaDetalle(ResultSet rs) throws SQLException {
         EspecieZonaDetalle detalle = new EspecieZonaDetalle();
         detalle.setEspecieId(rs.getInt("especie_id"));
         detalle.setNombreCientifico(rs.getString("nombre_cientifico"));

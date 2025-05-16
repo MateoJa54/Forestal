@@ -74,6 +74,7 @@ public class EspecieController extends HttpServlet {
         } else {
             especieDao.update(e);
         }
+        
         resp.sendRedirect(req.getContextPath() + "/Especie");
     }
 }

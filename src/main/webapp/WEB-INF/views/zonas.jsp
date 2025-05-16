@@ -162,11 +162,6 @@
                                             onclick="location.href='${pageContext.request.contextPath}/Zona?option=listarEspeciesZona&zonaId=${zona.zonaId}'">
                                         <i class="bi bi-tree"></i>
                                     </button>
-                                    <!-- Programas -->
-                                    <button class="btn btn-sm btn-dark"
-                                            onclick="openProgramaModal(${zona.zonaId})">
-                                        <i class="bi bi-shield-lock-fill"></i>
-                                    </button>
                                     <!-- Eliminar -->
                                     <form action="${pageContext.request.contextPath}/Zona" method="get" style="display:inline;">
                                         <input type="hidden" name="option" value="delete"/>
