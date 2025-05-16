@@ -11,18 +11,18 @@ public class ActividadValidator {
         List<String> errors = new ArrayList<>();
 
         // Validación del nombre (obligatorio, longitud, letras y no solo espacios)
-        String nombre = actividad.getNombre();
+       String nombre = actividad.getNombre();
         if (nombre == null || nombre.trim().isEmpty()) {
             errors.add("El nombre de la actividad es obligatorio.");
         } else {
             if (nombre.length() > 100) {
                 errors.add("El nombre no debe exceder los 100 caracteres.");
             }
-            if (!nombre.matches(".[a-zA-ZáéíóúÁÉÍÓÚñÑ]+.")) {
+            if (!nombre.matches(".*[a-zA-ZáéíóúÁÉÍÓÚñÑ].*")) {
                 errors.add("El nombre debe contener al menos una letra.");
             }
             if (nombre.trim().length() != nombre.length()) {
-                errors.add("El nombre no puede contener solo espacios en blanco.");
+                errors.add("El nombre no puede contener espacios al inicio o al final.");
             }
         }
 

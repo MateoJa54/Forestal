@@ -155,7 +155,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Presupuesto:</label>
-                                <input type="number" step="0.01" name="presupuesto" id="editPresupuesto" class="form-control" />
+                                <input type="number" min="500" step="0.01" name="presupuesto" id="editPresupuesto" class="form-control" required />
                             </div>
 
                             <div class="mb-3">
@@ -382,6 +382,17 @@
                     this.value = '';
                 }
             });
+            
+            document.getElementById('editFechaFin').addEventListener('change', function () {
+                const fechaInicio = new Date(document.getElementById('editFechaInicio').value);
+                const fechaFin = new Date(this.value);
+
+                if (fechaFin <= fechaInicio) {
+                    alert("La fecha de fin no puede ser anterior o igual a la fecha de inicio.");
+                    this.value = '';
+                }
+            });
+
         // Captura de errores enviados desde el backend
            const errores = ${errores != null ? errores : '[]'};
 
