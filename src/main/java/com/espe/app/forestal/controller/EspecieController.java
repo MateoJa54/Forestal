@@ -1,5 +1,6 @@
 package com.espe.app.forestal.controller;
 
+import com.espe.app.validator.EspecieValidator;
 import com.espe.app.forestal.dao.EspecieDao;
 import com.espe.app.forestal.model.EspecieArbol;
 import java.io.IOException;
@@ -51,11 +52,9 @@ public class EspecieController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         String idParam = req.getParameter("especieId");
-        Integer id = (idParam == null || idParam.isEmpty())
-                     ? null
-                     : Integer.parseInt(idParam);
+        Integer id = (idParam == null || idParam.isEmpty()) ? null : Integer.parseInt(idParam);
 
         EspecieArbol e = new EspecieArbol();
         if (id != null) e.setEspecieId(id);
@@ -64,17 +63,28 @@ public class EspecieController extends HttpServlet {
         e.setNombreComun(req.getParameter("nombreComun"));
         e.setFamilia(req.getParameter("familia"));
         e.setEstadoConservacion(
-            com.espe.app.forestal.model.EstadoConservacion.valueOf(req.getParameter("estadoConservacion").toUpperCase().replace(' ', '_'))
+            com.espe.app.forestal.model.EstadoConservacion.valueOf(
+                req.getParameter("estadoConservacion").toUpperCase().replace(' ', '_'))
         );
         e.setDescripcion(req.getParameter("descripcion"));
         e.setImagenUrl(req.getParameter("imagenUrl"));
+
+        EspecieValidator validator = new EspecieValidator();
+        List<String> errores = validator.validar(e);
+
+        if (!errores.isEmpty()) {
+            req.setAttribute("errores", errores);
+            req.setAttribute("especie", e);  // para mantener los datos en el formulario
+            req.getRequestDispatcher("/WEB-INF/views/formEspecie.jsp").forward(req, resp);
+            return;
+        }
 
         if (id == null) {
             especieDao.save(e);
         } else {
             especieDao.update(e);
         }
-        
+
         resp.sendRedirect(req.getContextPath() + "/Especie");
     }
 }

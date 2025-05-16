@@ -188,7 +188,7 @@
                                 <th> Nombre Cientifico</th>
                                 <th> Familia</th>
                                 <th> Estado de Conservacion</th>
-                                <th>️ Acción</th>
+                                <th> Acción</th>
 
                             </tr>
                         </thead>
@@ -246,22 +246,51 @@
         </div>
 
 
-        <script>
+       <script>
+        document.addEventListener("DOMContentLoaded", function () {
             function openEditEspecieModalFromButton(btn) {
-                document.getElementById('editEspecieId').value = btn.dataset.id;
-                document.getElementById('editNombreCientifico').value = btn.dataset.nombrecientifico;
-                document.getElementById('editNombreComun').value = btn.dataset.nombrecomun;
-                document.getElementById('editFamilia').value = btn.dataset.familia;
-                document.getElementById('editEstadoConservacion').value = btn.dataset.estadoconservacion;
-                document.getElementById('editDescripcion').value = btn.dataset.descripcion;
-                document.getElementById('editImagenUrl').value = btn.dataset.imagenurl;
+                const id = document.getElementById('editEspecieId');
+                const nombreCientifico = document.getElementById('editNombreCientifico');
+                const nombreComun = document.getElementById('editNombreComun');
+                const familia = document.getElementById('editFamilia');
+                const estadoConservacion = document.getElementById('editEstadoConservacion');
+                const descripcion = document.getElementById('editDescripcion');
+                const imagenUrl = document.getElementById('editImagenUrl');
+                const modal = document.getElementById('editEspecieModal');
 
-                document.getElementById('editEspecieModal').style.display = 'block';
+                if (id) id.value = btn.dataset.id || '';
+                if (nombreCientifico) nombreCientifico.value = btn.dataset.nombrecientifico || '';
+                if (nombreComun) nombreComun.value = btn.dataset.nombrecomun || '';
+                if (familia) familia.value = btn.dataset.familia || '';
+                if (estadoConservacion) estadoConservacion.value = btn.dataset.estadoconservacion || '';
+                if (descripcion) descripcion.value = btn.dataset.descripcion || '';
+                if (imagenUrl) imagenUrl.value = btn.dataset.imagenurl || '';
+                if (modal) modal.style.display = 'block';
             }
 
+            function openViewEspecieModal(btn) {
+                const nombreCientifico = document.getElementById('viewNombreCientifico');
+                const nombreComun = document.getElementById('viewNombreComun');
+                const familia = document.getElementById('viewFamilia');
+                const estadoConservacion = document.getElementById('viewEstadoConservacion');
+                const descripcion = document.getElementById('viewDescripcion');
+                const imagen = document.getElementById('viewImagen');
+                const modal = document.getElementById('viewEspecieModal');
 
+                if (nombreCientifico) nombreCientifico.value = btn.dataset.nombrecientifico || '';
+                if (nombreComun) nombreComun.value = btn.dataset.nombrecomun || '';
+                if (familia) familia.value = btn.dataset.familia || '';
+                if (estadoConservacion) estadoConservacion.value = btn.dataset.estadoconservacion || '';
+                if (descripcion) descripcion.value = btn.dataset.descripcion || '';
 
-            // Cierra los modales al hacer clic fuera de ellos
+                const imagenUrl = btn.dataset.imagenurl;
+                if (imagen) {
+                    imagen.src = (imagenUrl && imagenUrl.trim() !== '') ? imagenUrl : 'ruta/a/imagen-default.png';
+                }
+
+                if (modal) modal.style.display = 'block';
+            }
+
             window.onclick = function (event) {
                 ['especieModal', 'editEspecieModal', 'especieZonaModal', 'viewEspecieModal'].forEach(function (id) {
                     const modal = document.getElementById(id);
@@ -269,39 +298,19 @@
                         modal.style.display = "none";
                     }
                 });
-            }
+            };
 
-            document.getElementById("busquedaZona").addEventListener("keyup", function () {
-                const filtro = this.value.toLowerCase();
-                const filas = document.querySelectorAll("tbody.table-light tr");
+            const inputBusqueda = document.getElementById("busquedaZona");
+            if (inputBusqueda) {
+                inputBusqueda.addEventListener("keyup", function () {
+                    const filtro = this.value.toLowerCase();
+                    const filas = document.querySelectorAll("tbody.table-light tr");
 
-                filas.forEach(fila => {
-                    const nombre = fila.cells[0].textContent.toLowerCase(); // Nombre
-
-                    if (nombre.includes(filtro)) {
-                        fila.style.display = "";
-                    } else {
-                        fila.style.display = "none";
-                    }
+                    filas.forEach(fila => {
+                        const nombre = fila.cells[0].textContent.toLowerCase(); // Nombre
+                        fila.style.display = nombre.includes(filtro) ? "" : "none";
+                    });
                 });
-            });
-
-            function openViewEspecieModal(btn) {
-                document.getElementById('viewNombreCientifico').value = btn.dataset.nombrecientifico;
-                document.getElementById('viewNombreComun').value = btn.dataset.nombrecomun;
-                document.getElementById('viewFamilia').value = btn.dataset.familia;
-                document.getElementById('viewEstadoConservacion').value = btn.dataset.estadoconservacion;
-                document.getElementById('viewDescripcion').value = btn.dataset.descripcion;
-
-                const imagenUrl = btn.dataset.imagenurl; // ✅ ahora sí lo defines
-
-                if (imagenUrl && imagenUrl.trim() !== '') {
-                    document.getElementById('viewImagen').src = imagenUrl;
-                } else {
-                    document.getElementById('viewImagen').src = 'ruta/a/imagen-default.png'; // Opcional
-                }
-
-                document.getElementById('viewEspecieModal').style.display = 'block';
             }
 
             function validarFormulario(form) {
@@ -316,8 +325,8 @@
                 const estadoConservacion = form.estadoConservacion.value;
                 const imagenUrl = form.imagenUrl.value.trim();
 
-                if (!esTextoValido(nombreCientifico)) {
-                    alert("El nombre científico no puede estar vacío o solo con espacios.");
+                if (!nombreCientifico || /\s/.test(nombreCientifico)) {
+                    alert("El nombre científico no puede estar vacío ni contener espacios.");
                     return false;
                 }
 
@@ -327,11 +336,12 @@
                 }
 
                 if (!esTextoValido(familia)) {
-                    alert("La familia no puede estar vacío o solo con espacios.");
+                    alert("La familia no puede estar vacía o solo con espacios.");
                     return false;
                 }
+
                 if (!esTextoValido(descripcion)) {
-                    alert("La descripcion no puede estar vacío o solo con espacios.");
+                    alert("La descripción no puede estar vacía o solo con espacios.");
                     return false;
                 }
 
@@ -348,19 +358,19 @@
                 return true;
             }
 
-            // Aplica a ambos formularios
+            // Aplica validación a todos los formularios que envían a "/Especie"
             document.querySelectorAll("form[action$='/Especie']").forEach(form => {
                 form.addEventListener("submit", function (e) {
                     if (!validarFormulario(this)) {
-                        e.preventDefault(); // evita el envío
+                        e.preventDefault(); // Evita el envío si no es válido
                     }
                 });
             });
 
-
-        </script>
-
-
-
+            // Exponer funciones al ámbito global para usarlas en botones
+            window.openEditEspecieModalFromButton = openEditEspecieModalFromButton;
+            window.openViewEspecieModal = openViewEspecieModal;
+        });
+    </script>
     </body>
 </html>
