@@ -45,7 +45,10 @@
                         <form method="post" action="${pageContext.request.contextPath}/ZonaEspecie" class="row g-3">
                             <div class="col-md-4">
                                 <label class="form-label">Zona:</label>
-                                <select name="zonaId" class="form-select" required>
+                               <select name="zonaId"
+                                        class="form-select"
+                                        required
+                                        onchange="if (this.value) window.location='${pageContext.request.contextPath}/ZonaEspecie?zonaId='+this.value;">
                                     <option value="">-- seleccione --</option>
                                     <c:forEach var="z" items="${allZonas}">
                                         <option value="${z.zonaId}"
@@ -54,6 +57,7 @@
                                         </option>
                                     </c:forEach>
                                 </select>
+
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Especie:</label>
