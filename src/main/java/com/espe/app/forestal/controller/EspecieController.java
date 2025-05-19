@@ -32,7 +32,7 @@ public class EspecieController extends HttpServlet {
                 Integer idUpd = Integer.parseInt(req.getParameter("id"));
                 EspecieArbol e = especieDao.findById(idUpd);
                 req.setAttribute("especie", e);
-                req.getRequestDispatcher("/WEB-INF/views/formEspecie.jsp")
+                req.getRequestDispatcher("/WEB-INF/views/Especie.jsp")
                    .forward(req, resp);
                 break;
 
@@ -75,7 +75,7 @@ public class EspecieController extends HttpServlet {
         if (!errores.isEmpty()) {
             req.setAttribute("errores", errores);
             req.setAttribute("especie", e);  // para mantener los datos en el formulario
-            req.getRequestDispatcher("/WEB-INF/views/formEspecie.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/Especie.jsp").forward(req, resp);
             return;
         }
 

@@ -87,6 +87,8 @@
                         <span class="btn-close float-end" onclick="document.getElementById('editEspecieModal').style.display = 'none'"></span>
                         <h2>Editar especie de árbol</h2>
                         <form action="${pageContext.request.contextPath}/Especie" method="post">
+                            <input type="hidden" name="option" value="update" />
+
                             <input type="hidden" name="especieId" id="editEspecieId" />
 
                             <div class="mb-3">
@@ -246,62 +248,75 @@
 
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                function openEditEspecieModalFromButton(btn) {
-                    const id = document.getElementById('editEspecieId');
-                    const nombreCientifico = document.getElementById('editNombreCientifico');
-                    const nombreComun = document.getElementById('editNombreComun');
-                    const familia = document.getElementById('editFamilia');
-                    const estadoConservacion = document.getElementById('editEstadoConservacion');
-                    const descripcion = document.getElementById('editDescripcion');
-                    const imagenUrl = document.getElementById('editImagenUrl');
-                    const modal = document.getElementById('editEspecieModal');
+            function openEditEspecieModalFromButton(btn) {
+                const id = document.getElementById('editEspecieId');
+                const nombreCientifico = document.getElementById('editNombreCientifico');
+                const nombreComun = document.getElementById('editNombreComun');
+                const familia = document.getElementById('editFamilia');
+                const estadoConservacion = document.getElementById('editEstadoConservacion');
+                const descripcion = document.getElementById('editDescripcion');
+                const imagenUrl = document.getElementById('editImagenUrl');
+                const modal = document.getElementById('editEspecieModal');
 
-                    if (id)
-                        id.value = btn.dataset.id || '';
-                    if (nombreCientifico)
-                        nombreCientifico.value = btn.dataset.nombrecientifico || '';
-                    if (nombreComun)
-                        nombreComun.value = btn.dataset.nombrecomun || '';
-                    if (familia)
-                        familia.value = btn.dataset.familia || '';
-                    if (estadoConservacion)
-                        estadoConservacion.value = btn.dataset.estadoconservacion || '';
-                    if (descripcion)
-                        descripcion.value = btn.dataset.descripcion || '';
-                    if (imagenUrl)
-                        imagenUrl.value = btn.dataset.imagenurl || '';
-                    if (modal)
-                        modal.style.display = 'block';
+                if (id)
+                    id.value = btn.dataset.id || '';
+                if (nombreCientifico)
+                    nombreCientifico.value = btn.dataset.nombrecientifico || '';
+                if (nombreComun)
+                    nombreComun.value = btn.dataset.nombrecomun || '';
+                if (familia)
+                    familia.value = btn.dataset.familia || '';
+                if (estadoConservacion)
+                    estadoConservacion.value = btn.dataset.estadoconservacion || '';
+                if (descripcion)
+                    descripcion.value = btn.dataset.descripcion || '';
+                if (imagenUrl)
+                    imagenUrl.value = btn.dataset.imagenurl || '';
+                if (modal)
+                    modal.style.display = 'block';
+            }
+
+            function openViewEspecieModal(btn) {
+                const nombreCientifico = document.getElementById('viewNombreCientifico');
+                const nombreComun = document.getElementById('viewNombreComun');
+                const familia = document.getElementById('viewFamilia');
+                const estadoConservacion = document.getElementById('viewEstadoConservacion');
+                const descripcion = document.getElementById('viewDescripcion');
+                const imagen = document.getElementById('viewImagen');
+                const modal = document.getElementById('viewEspecieModal');
+
+                if (nombreCientifico)
+                    nombreCientifico.value = btn.dataset.nombrecientifico || '';
+                if (nombreComun)
+                    nombreComun.value = btn.dataset.nombrecomun || '';
+                if (familia)
+                    familia.value = btn.dataset.familia || '';
+                if (estadoConservacion)
+                    estadoConservacion.value = btn.dataset.estadoconservacion || '';
+                if (descripcion)
+                    descripcion.value = btn.dataset.descripcion || '';
+
+                const imagenUrl = btn.dataset.imagenurl;
+                if (imagen) {
+                    imagen.src = (imagenUrl && imagenUrl.trim() !== '') ? imagenUrl : 'ruta/a/imagen-default.png';
                 }
 
-                function openViewEspecieModal(btn) {
-                    const nombreCientifico = document.getElementById('viewNombreCientifico');
-                    const nombreComun = document.getElementById('viewNombreComun');
-                    const familia = document.getElementById('viewFamilia');
-                    const estadoConservacion = document.getElementById('viewEstadoConservacion');
-                    const descripcion = document.getElementById('viewDescripcion');
-                    const imagen = document.getElementById('viewImagen');
-                    const modal = document.getElementById('viewEspecieModal');
+                if (modal)
+                    modal.style.display = 'block';
+            }
 
-                    if (nombreCientifico)
-                        nombreCientifico.value = btn.dataset.nombrecientifico || '';
-                    if (nombreComun)
-                        nombreComun.value = btn.dataset.nombrecomun || '';
-                    if (familia)
-                        familia.value = btn.dataset.familia || '';
-                    if (estadoConservacion)
-                        estadoConservacion.value = btn.dataset.estadoconservacion || '';
-                    if (descripcion)
-                        descripcion.value = btn.dataset.descripcion || '';
+            document.addEventListener("DOMContentLoaded", function () {
+                const inputBusqueda = document.getElementById("busquedaZona");
+                if (inputBusqueda) {
+                    inputBusqueda.addEventListener("keyup", function () {
+                        const filtro = this.value.toLowerCase();
+                        const filas = document.querySelectorAll("tbody.table-light tr");
 
-                    const imagenUrl = btn.dataset.imagenurl;
-                    if (imagen) {
-                        imagen.src = (imagenUrl && imagenUrl.trim() !== '') ? imagenUrl : 'ruta/a/imagen-default.png';
-                    }
-
-                    if (modal)
-                        modal.style.display = 'block';
+                        filas.forEach(fila => {
+                            const nombre = fila.cells[0].textContent.toLowerCase();
+                            fila.style.display = nombre.includes(filtro) ? "" : "none";
+                        });
+                    });
                 }
 
                 window.onclick = function (event) {
@@ -312,21 +327,8 @@
                         }
                     });
                 };
+            });
 
-                const inputBusqueda = document.getElementById("busquedaZona");
-                if (inputBusqueda) {
-                    inputBusqueda.addEventListener("keyup", function () {
-                        const filtro = this.value.toLowerCase();
-                        const filas = document.querySelectorAll("tbody.table-light tr");
-
-                        filas.forEach(fila => {
-                            const nombre = fila.cells[0].textContent.toLowerCase(); // Nombre
-                            fila.style.display = nombre.includes(filtro) ? "" : "none";
-                        });
-                    });
-                }
-
-     
         </script>
     </body>
 </html>
