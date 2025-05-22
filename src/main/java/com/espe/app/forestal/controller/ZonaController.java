@@ -1,9 +1,10 @@
-package com.espe.app.forestal.controller;
+ package com.espe.app.forestal.controller;
 
 import com.espe.app.forestal.dao.EspecieDao;
 import com.espe.app.forestal.dao.ZonaDao;
 import com.espe.app.forestal.model.EspecieZonaDetalle;
 import com.espe.app.forestal.model.ZonaForestal;
+ import com.espe.app.validator.ZonaValidator;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -65,29 +66,43 @@ public class ZonaController extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException {
-        String idParam = req.getParameter("zonaId");
-        Integer id = (idParam == null || idParam.isEmpty())
-                ? null
-                : Integer.parseInt(idParam);
+   @Override
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+            String idParam = req.getParameter("zonaId");
+            Integer id = (idParam == null || idParam.isEmpty())
+                    ? null
+                    : Integer.parseInt(idParam);
 
-        ZonaForestal zona = new ZonaForestal();
-        if (id != null) zona.setZonaId(id);
+            ZonaForestal zona = new ZonaForestal();
+            if (id != null) zona.setZonaId(id);
 
-        zona.setNombre(req.getParameter("nombre"));
-        zona.setUbicacion(req.getParameter("ubicacion"));
-        zona.setAreaHectareas(new java.math.BigDecimal(req.getParameter("areaHectareas")));
-        zona.setTipoVegetacion(req.getParameter("tipoVegetacion"));
-        zona.setCoordenadas(req.getParameter("coordenadas"));
-        zona.setFechaRegistro(java.time.LocalDate.parse(req.getParameter("fechaRegistro")));
+            zona.setNombre(req.getParameter("nombre"));
+            zona.setUbicacion(req.getParameter("ubicacion"));
+            zona.setAreaHectareas(new java.math.BigDecimal(req.getParameter("areaHectareas")));
+            zona.setTipoVegetacion(req.getParameter("tipoVegetacion"));
+            zona.setCoordenadas(req.getParameter("coordenadas"));
+            zona.setFechaRegistro(java.time.LocalDate.parse(req.getParameter("fechaRegistro")));
 
-        if (id == null) {
-            zonaDao.save(zona);
-        } else {
-            zonaDao.update(zona);
+            // Validación de datos
+            com.espe.app.validator.ZonaValidator validator = new com.espe.app.validator.ZonaValidator();
+            List<String> errores = validator.validar(zona);
+
+            if (!errores.isEmpty()) {
+                req.setAttribute("errores", errores);
+                req.setAttribute("zona", zona); // Para volver a llenar el formulario con los datos ya ingresados
+                req.getRequestDispatcher("/WEB-INF/views/formZona.jsp")
+                   .forward(req, resp);
+                return;
+            }
+
+            // Guardar o actualizar
+            if (id == null) {
+                zonaDao.save(zona);
+            } else {
+                zonaDao.update(zona);
+            }
+
+            resp.sendRedirect(req.getContextPath() + "/Zona");
         }
-        resp.sendRedirect(req.getContextPath() + "/Zona");
-    }
 }

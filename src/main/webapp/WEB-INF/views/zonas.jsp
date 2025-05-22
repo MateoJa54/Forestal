@@ -30,7 +30,13 @@
                 <button class="btn-agregar" onclick="document.getElementById('zonaModal').style.display = 'block'">
                     Agregar Zona
                 </button>
-
+                <c:if test="${not empty errores}">
+                    <ul style="color:red;">
+                        <c:forEach var="error" items="${errores}">
+                            <li>${error}</li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
                 <!-- Modal Registrar Zona -->
                 <div id="zonaModal" class="modal">
                     <div class="modal-content p-4 bg-light rounded shadow">
@@ -277,6 +283,44 @@
                                             ? "" : "none";
                                 });
                     });
+            document.addEventListener('DOMContentLoaded', function () {
+                const formNew = document.querySelector('#zonaModal form');
+                const formEdit = document.querySelector('#editZonaModal form');
+                [formNew, formEdit].forEach(form => {
+                    form.addEventListener('submit', function (e) {
+                        const nombre = form.querySelector('[name="nombre"]').value.trim();
+                        const ubicacion = form.querySelector('[name="ubicacion"]').value.trim();
+                        const area = parseFloat(form.querySelector('[name="areaHectareas"]').value);
+                        const fecha = new Date(form.querySelector('[name="fechaRegistro"]').value);
+                        const hoy = new Date();
+
+                        const regexTexto = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,}$/;
+
+                        let errores = [];
+
+                        if (!regexTexto.test(nombre)) {
+                            errores.push("El nombre debe tener al menos 3 letras y solo contener letras y espacios.");
+                        }
+
+                        if (!regexTexto.test(ubicacion)) {
+                            errores.push("La ubicación debe tener al menos 3 letras y solo contener letras y espacios.");
+                        }
+
+                        if (isNaN(area) || area <= 0) {
+                            errores.push("El área debe ser un número mayor a 0.");
+                        }
+
+                        if (fecha > hoy) {
+                            errores.push("La fecha de registro no puede ser futura.");
+                        }
+
+                        if (errores.length > 0) {
+                            e.preventDefault();
+                            alert(errores.join('\n'));
+                        }
+                    });
+                });
+            });
         </script>
     </body>
 </html>
