@@ -1,23 +1,17 @@
-
 package com.espe.app.forestal.model;
 import jakarta.persistence.*;
 
 @Embeddable
 public class ZonaEspecieId implements java.io.Serializable {
-
     @Column(name = "zona_id")
     private Integer zonaId;
-
     @Column(name = "especie_id")
     private Integer especieId;
-
     public ZonaEspecieId() {}
-
     public ZonaEspecieId(Integer zonaId, Integer especieId) {
         this.zonaId = zonaId;
         this.especieId = especieId;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -25,37 +19,15 @@ public class ZonaEspecieId implements java.io.Serializable {
         ZonaEspecieId that = (ZonaEspecieId) o;
         return getZonaId().equals(that.getZonaId()) && getEspecieId().equals(that.getEspecieId());
     }
-
     @Override
     public int hashCode() {
-        return getZonaId().hashCode() + getEspecieId().hashCode();
-    }
-
-    /**
-     * @return the zonaId
-     */
+        return getZonaId().hashCode() + getEspecieId().hashCode();  }
     public Integer getZonaId() {
-        return zonaId;
-    }
-
-    /**
-     * @param zonaId the zonaId to set
-     */
+        return zonaId;  }
     public void setZonaId(Integer zonaId) {
-        this.zonaId = zonaId;
-    }
-
-    /**
-     * @return the especieId
-     */
+        this.zonaId = zonaId;  }
     public Integer getEspecieId() {
-        return especieId;
-    }
-
-    /**
-     * @param especieId the especieId to set
-     */
+        return especieId; }
     public void setEspecieId(Integer especieId) {
-        this.especieId = especieId;
-    }
+        this.especieId = especieId;  }
 }

@@ -1,10 +1,10 @@
- package com.espe.app.forestal.controller;
+package com.espe.app.forestal.controller;
 
-import com.espe.app.forestal.dao.EspecieDao;
-import com.espe.app.forestal.dao.ZonaDao;
+
 import com.espe.app.forestal.model.EspecieZonaDetalle;
 import com.espe.app.forestal.model.ZonaForestal;
- import com.espe.app.validator.ZonaValidator;
+import com.espe.app.forestal.service.ZonaService;
+import com.espe.app.validator.ZonaValidator;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "ZonaController", urlPatterns = {"/Zona"})
 public class ZonaController extends HttpServlet {
-    private final ZonaDao zonaDao = new ZonaDao();
+    private final ZonaService zonaService = new ZonaService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -25,84 +25,64 @@ public class ZonaController extends HttpServlet {
 
         switch (option) {
             case "new":
-                req.getRequestDispatcher("/WEB-INF/views/formZona.jsp")
-                   .forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/formZona.jsp").forward(req, resp);
                 break;
-
             case "update":
-                Integer idUpd = Integer.parseInt(req.getParameter("id"));
-                ZonaForestal z = zonaDao.findById(idUpd);
+                int idUpd = Integer.parseInt(req.getParameter("id"));
+                ZonaForestal z = zonaService.findById(idUpd);
                 req.setAttribute("zona", z);
-                req.getRequestDispatcher("/WEB-INF/views/formZona.jsp")
-                   .forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/formZona.jsp").forward(req, resp);
                 break;
-
             case "delete":
-                Integer idDel = Integer.parseInt(req.getParameter("id"));
-                zonaDao.delete(idDel);
+                int idDel = Integer.parseInt(req.getParameter("id"));
+                zonaService.delete(idDel);
                 resp.sendRedirect(req.getContextPath() + "/Zona");
                 break;
             case "listarEspeciesZona":
-                Integer zonaIdEspecies = Integer.parseInt(req.getParameter("zonaId"));
+                int zonaIdEspecies = Integer.parseInt(req.getParameter("zonaId"));
                 List<EspecieZonaDetalle> especiesZona =
-                    new EspecieDao().findEspeciesByZonaId(zonaIdEspecies);
+                    zonaService.findEspeciesByZonaId(zonaIdEspecies);
                 req.setAttribute("especiesZona", especiesZona);
-
-                // Recarga también todas las zonas
-                List<ZonaForestal> todas = zonaDao.findAll();
+                List<ZonaForestal> todas = zonaService.findAll();
                 req.setAttribute("zonas", todas);
-
-                req.getRequestDispatcher("/WEB-INF/views/zonas.jsp")
-                   .forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/zonas.jsp").forward(req, resp);
                 return;
-
-
-            default:  // getAll
-                List<ZonaForestal> list = zonaDao.findAll();
+            default:
+                List<ZonaForestal> list = zonaService.findAll();
                 req.setAttribute("zonas", list);
-                // ** ruta corregida ** 
-                req.getRequestDispatcher("/WEB-INF/views/zonas.jsp")
-                   .forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/zonas.jsp").forward(req, resp);
         }
     }
 
-   @Override
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-                throws ServletException, IOException {
-            String idParam = req.getParameter("zonaId");
-            Integer id = (idParam == null || idParam.isEmpty())
-                    ? null
-                    : Integer.parseInt(idParam);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String idParam = req.getParameter("zonaId");
+        Integer id = (idParam == null || idParam.isEmpty()) ? null : Integer.parseInt(idParam);
 
-            ZonaForestal zona = new ZonaForestal();
-            if (id != null) zona.setZonaId(id);
+        ZonaForestal zona = new ZonaForestal();
+        if (id != null) zona.setZonaId(id);
+        zona.setNombre(req.getParameter("nombre"));
+        zona.setUbicacion(req.getParameter("ubicacion"));
+        zona.setAreaHectareas(new java.math.BigDecimal(req.getParameter("areaHectareas")));
+        zona.setTipoVegetacion(req.getParameter("tipoVegetacion"));
+        zona.setCoordenadas(req.getParameter("coordenadas"));
+        zona.setFechaRegistro(java.time.LocalDate.parse(req.getParameter("fechaRegistro")));
 
-            zona.setNombre(req.getParameter("nombre"));
-            zona.setUbicacion(req.getParameter("ubicacion"));
-            zona.setAreaHectareas(new java.math.BigDecimal(req.getParameter("areaHectareas")));
-            zona.setTipoVegetacion(req.getParameter("tipoVegetacion"));
-            zona.setCoordenadas(req.getParameter("coordenadas"));
-            zona.setFechaRegistro(java.time.LocalDate.parse(req.getParameter("fechaRegistro")));
-
-            // Validación de datos
-            com.espe.app.validator.ZonaValidator validator = new com.espe.app.validator.ZonaValidator();
-            List<String> errores = validator.validar(zona);
-
-            if (!errores.isEmpty()) {
-                req.setAttribute("errores", errores);
-                req.setAttribute("zona", zona); // Para volver a llenar el formulario con los datos ya ingresados
-                req.getRequestDispatcher("/WEB-INF/views/formZona.jsp")
-                   .forward(req, resp);
-                return;
-            }
-
-            // Guardar o actualizar
-            if (id == null) {
-                zonaDao.save(zona);
-            } else {
-                zonaDao.update(zona);
-            }
-
-            resp.sendRedirect(req.getContextPath() + "/Zona");
+        ZonaValidator validator = new ZonaValidator();
+        List<String> errores = validator.validar(zona);
+        if (!errores.isEmpty()) {
+            req.setAttribute("errores", errores);
+            req.setAttribute("zona", zona);
+            req.getRequestDispatcher("/WEB-INF/views/formZona.jsp").forward(req, resp);
+            return;
         }
+
+        if (id == null) {
+            zonaService.save(zona);
+        } else {
+            zonaService.update(zona);
+        }
+        resp.sendRedirect(req.getContextPath() + "/Zona");
+    }
 }
