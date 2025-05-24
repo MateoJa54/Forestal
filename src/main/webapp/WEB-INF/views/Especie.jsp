@@ -203,7 +203,7 @@
                                     <td class="text-center">
 
                                         <!-- Botón para abrir el modal de edición -->
-                                        <button class="btn btn-sm btn-warning"
+                                        <button class="btn btn-sm " style="background-color: #2196F3; color: white"
                                                 data-id="${especie.especieId}"
                                                 data-nombrecientifico="${fn:escapeXml(especie.nombreCientifico)}"
                                                 data-nombrecomun="${fn:escapeXml(especie.nombreComun)}"
@@ -215,7 +215,7 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
 
-                                        <button class="btn btn-sm btn-info"
+                                        <button class="btn btn-sm " style="background-color:#006837; color: white"
                                                 data-id="${especie.especieId}"
                                                 data-nombrecientifico="${fn:escapeXml(especie.nombreCientifico)}"
                                                 data-nombrecomun="${fn:escapeXml(especie.nombreComun)}"

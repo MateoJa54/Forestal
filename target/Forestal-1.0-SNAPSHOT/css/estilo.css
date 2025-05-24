@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #FFF8E1;
+    background-color: #F5F5DC;
 }
 
 .header {
@@ -42,7 +42,7 @@ body {
 
 .sidebar {
     width: 350px;
-    background-color: #1B5E20;
+    background-color: #2E5939;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -52,8 +52,8 @@ body {
     width: 100%;
     padding: 15px;
     margin-bottom: 10px;
-    background-color: #2E7D32;
-    color: white;
+    background-color: #4CAF50;
+    color: #FFFFFF;
     border: none;
     cursor: pointer;
     text-align: center;

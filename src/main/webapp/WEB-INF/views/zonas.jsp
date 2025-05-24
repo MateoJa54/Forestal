@@ -196,7 +196,7 @@
                                     <td>${zona.tipoVegetacion}</td>
                                     <td class="text-center">
                                         <!-- Editar -->
-                                        <button class="btn btn-sm btn-warning"
+                                        <button class="btn btn-sm " style="background-color: #2196F3; color: white" 
                                                 onclick="openEditModal(
                                                 ${zona.zonaId},
                                                             '${zona.nombre}',
@@ -209,7 +209,7 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
                                         <!-- Ver Especies -->
-                                        <button class="btn btn-sm btn-secondary"
+                                        <button class="btn btn-sm " style="background-color:#006837; color: white"
                                                 onclick="location.href = '${pageContext.request.contextPath}/Zona?option=listarEspeciesZona&zonaId=${zona.zonaId}'">
                                             <i class="bi bi-tree"></i>
                                         </button>
@@ -230,8 +230,7 @@
             </div>
         </div>
 
-        <!-- Scripts -->
-        <!-- 1) Auto-abre el modal de especies al volver de listarEspeciesZona -->
+
         <script>
             <c:if test="${not empty especiesZona}">
         document.getElementById('especieZonaModal').style.display = 'block';
@@ -252,14 +251,12 @@
             }
         </script>
 
-        <!-- 3) Función programas -->
         <script>
             function openProgramaModal() {
                 document.getElementById('programaModal').style.display = 'block';
             }
         </script>
 
-        <!-- 4) Cierra modales al hacer clic fuera -->
         <script>
             window.onclick = function (event) {
                 ['zonaModal', 'editZonaModal', 'especieZonaModal', 'programaModal']
@@ -271,7 +268,6 @@
             };
         </script>
 
-        <!-- 5) Filtro de búsqueda -->
         <script>
             document.getElementById("busquedaZona")
                     .addEventListener("keyup", function () {

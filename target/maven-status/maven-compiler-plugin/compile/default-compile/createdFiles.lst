@@ -1,5 +1,6 @@
 com\espe\app\forestal\dao\EspecieDao.class
 com\espe\app\forestal\webService\dto\EspecieZonaDetalleRequest.class
+com\espe\app\forestal\controller\SesionController.class
 com\espe\app\forestal\controller\EspecieController.class
 com\espe\app\forestal\model\EspecieArbol.class
 com\espe\app\forestal\dao\TestZonaEspecieDaoJdbc.class

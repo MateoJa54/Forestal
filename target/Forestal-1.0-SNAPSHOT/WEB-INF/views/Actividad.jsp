@@ -234,7 +234,6 @@
 
 
                 <h2>Actividades Proteccion Registradas</h2>
-                <!-- Depuración: mostrar total encontradas -->
                 <c:if test="${empty actividades}">
                     <p class="countZone">No hay zonas registradas.</p>
                 </c:if>
@@ -268,9 +267,8 @@
                                     <td>${actividad.estado}</td>
                                     <td class="text-center">
 
-                                        <!-- Botón para abrir el modal de edición -->
                                         <button 
-                                            class="btn btn-sm btn-warning" 
+                                            class="btn btn-sm "  style="background-color: #2196F3; color: white"
                                             data-id="${actividad.actividadId}"
                                             data-nombre="${actividad.nombre}"
                                             data-descripcion="${actividad.descripcion}"
@@ -284,7 +282,7 @@
                                         </button>
 
                                         <button
-                                            class="btn btn-sm btn-info"
+                                            class="btn btn-sm " style="background-color:#006837; color: white"
                                             data-nombre="${actividad.nombre}"
                                             data-descripcion="${actividad.descripcion}"
                                             data-fechainicio="${actividad.fechaInicio}"
