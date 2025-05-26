@@ -10,6 +10,9 @@
     </session-config>
     
     <welcome-file-list>
-        <welcome-file>Home.jsp</welcome-file>
+            <!-- La primera que se buscará al entrar al root del contexto -->
+    <welcome-file>Sesion.jsp</welcome-file>
+    <!-- Si Sesion.jsp no existe, buscará home.jsp -->
+    <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
