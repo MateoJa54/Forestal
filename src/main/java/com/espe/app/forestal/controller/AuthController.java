@@ -24,25 +24,21 @@ public class AuthController extends HttpServlet {
             throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String correo = req.getParameter("correo");
         String clave = req.getParameter("contrasena");
-
         Optional<Usuario> optUser = usuarioService.findByCorreo(correo);
         if (optUser.isEmpty() || !passwordEncoder.matches(clave, optUser.get().getContrasena())) {
             req.setAttribute("error", "Credenciales inválidas");
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
             return;
         }
-
         Usuario user = optUser.get();
         HttpSession session = req.getSession(true);
         session.setAttribute("usuario", user);
         session.setAttribute("rol", user.getRol().name());
-
         if (user.getRol() == RolUsuario.administrador) {
             resp.sendRedirect(req.getContextPath() + "/Zona");
         } else {
