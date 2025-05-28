@@ -1,5 +1,6 @@
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\model\EspecieArbol.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\dao\util\ConnectionBdd.java
+C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\controller\EspecieUserController.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\dao\TestZonaDao.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\dao\TestUsuarioDao.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\model\ActividadConservacion.java
@@ -17,6 +18,7 @@ C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\a
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\webService\dto\ZonaRequest.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\controller\HomeController.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\model\Usuario.java
+C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\controller\UserController.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\dao\TestActividadDao.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\Service\UsuarioService.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\webService\endpoint\ZonaEndpoint.java
@@ -38,11 +40,13 @@ C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\a
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\webService\config\SoapWebServiceConfig.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\Service\EspecieService.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\validator\ActividadValidator.java
+C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\controller\ActividadUserController.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\dao\EspecieDao.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\Service\AuthService.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\model\ZonaEspecieId.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\dao\TestEspecieDao.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\webService\dto\EspecieZonaDetalleRequest.java
+C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\controller\ZonaUserController.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\validator\ZonaValidator.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\controller\ZonaEspecieController.java
 C:\Users\mateo\Downloads\Proyecto web\Forestal\Forestal\src\main\java\com\espe\app\forestal\dao\ActividadDao.java

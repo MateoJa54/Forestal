@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ActividadController", urlPatterns = {"/Actividad"})
+@WebServlet(name = "ActividadController", urlPatterns = {"/ActividadAdmin"})
 public class ActividadController extends HttpServlet {
 
     private final ActividadService actividadService = new ActividadService();
@@ -34,7 +34,7 @@ public class ActividadController extends HttpServlet {
             case "new":
                 List<ZonaForestal> zonas = zonaDao.findAll();
                 req.setAttribute("zonas", zonas);
-                req.getRequestDispatcher("/WEB-INF/views/Actividad.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/Actividad.jsp").forward(req, resp);
                 break;
             case "update":
                 int idUpd = Integer.parseInt(req.getParameter("id"));
@@ -42,19 +42,19 @@ public class ActividadController extends HttpServlet {
                 List<ZonaForestal> zonasUpdate = zonaDao.findAll();
                 req.setAttribute("actividad", actividad);
                 req.setAttribute("zonas", zonasUpdate);
-                req.getRequestDispatcher("/WEB-INF/views/Actividad.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/Actividad.jsp").forward(req, resp);
                 break;
             case "delete":
                 int idDel = Integer.parseInt(req.getParameter("id"));
                 actividadService.delete(idDel);
-                resp.sendRedirect(req.getContextPath() + "/Actividad");
+                resp.sendRedirect(req.getContextPath() + "/ActividadAdmin");
                 break;
             default:
                 List<ActividadConservacion> list = actividadService.findAll();
                 List<ZonaForestal> zonasDefault = zonaDao.findAll();
                 req.setAttribute("actividades", list);
                 req.setAttribute("zonas", zonasDefault);
-                req.getRequestDispatcher("/WEB-INF/views/Actividad.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/Actividad.jsp").forward(req, resp);
         }
     }
 
@@ -92,14 +92,14 @@ public class ActividadController extends HttpServlet {
             } else {
                 actividadService.update(actividad);
             }
-            resp.sendRedirect(req.getContextPath() + "/Actividad");
+            resp.sendRedirect(req.getContextPath() + "/ActividadAdmin");
         } else {
             req.setAttribute("errores", errores);
             req.setAttribute("actividad", actividad);
             req.setAttribute("zonas", zonaDao.findAll());
             List<ActividadConservacion> list = actividadService.findAll();
             req.setAttribute("actividades", list);
-            req.getRequestDispatcher("/WEB-INF/views/Actividad.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/Admin/Actividad.jsp").forward(req, resp);
         }
     }
 }

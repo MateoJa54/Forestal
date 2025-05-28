@@ -20,10 +20,10 @@ public class AuthController extends HttpServlet {
             throws ServletException, IOException {
 
         String action = req.getParameter("action");
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(true);
 
         if ("register".equals(action)) {
-            // Recoge campos por separado
+            // Registro de usuario normal (los admins se crean por separado)
             String nombre   = req.getParameter("nombre");
             String apellido = req.getParameter("apellido");
             String correo   = req.getParameter("userEmail");
@@ -31,22 +31,32 @@ public class AuthController extends HttpServlet {
 
             boolean ok = usuarioService.register(nombre, apellido, correo, pass);
             if (ok) {
-                // Registro OK: iniciar sesión automático
+                // Iniciar sesión automático
                 Optional<Usuario> opt = usuarioService.login(correo, pass);
-                opt.ifPresent(u -> session.setAttribute("usuario", u));
-                resp.sendRedirect(req.getContextPath() + "/Home.jsp");
+                if (opt.isPresent()) {
+                    Usuario u = opt.get();
+                    session.setAttribute("usuario", u);
+                    // Redirigir según rol (aunque aquí siempre será 'usuario')
+                    resp.sendRedirect(req.getContextPath()
+                        + (u.getRol() == RolUsuario.administrador
+                            ? "/ZonaAdmin"
+                            : "/Home"));
+                } else {
+                    // raro, pero por si falla el login automático
+                    resp.sendRedirect(req.getContextPath() + "/Sesion.jsp");
+                }
             } else {
                 req.setAttribute("error", "No se pudo registrar (correo ya existe)");
                 req.getRequestDispatcher("/Sesion.jsp").forward(req, resp);
             }
 
         } else if ("login".equals(action)) {
+            // Inicio de sesión
             String correo   = req.getParameter("userEmail");
             String pass     = req.getParameter("userPassword");
 
             Optional<Usuario> opt = usuarioService.login(correo, pass);
             if (opt.isEmpty()) {
-                // Mensaje específico para login fallido
                 req.setAttribute("error", "Usuario no encontrado");
                 req.getRequestDispatcher("/Sesion.jsp").forward(req, resp);
                 return;
@@ -55,11 +65,11 @@ public class AuthController extends HttpServlet {
             Usuario user = opt.get();
             session.setAttribute("usuario", user);
 
-            // Redirige según rol
+            // Redirigir de inmediato al área correspondiente
             if (user.getRol() == RolUsuario.administrador) {
-                resp.sendRedirect(req.getContextPath() + "/homeAdministrativo.jsp");
+                resp.sendRedirect(req.getContextPath() + "/ZonaAdmin");
             } else {
-                resp.sendRedirect(req.getContextPath() + "/Home.jsp");
+                resp.sendRedirect(req.getContextPath() + "/ZonaUser");
             }
 
         } else {

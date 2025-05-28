@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "ZonaController", urlPatterns = {"/Zona"})
+@WebServlet(name = "ZonaController", urlPatterns = {"/ZonaAdmin"})
 public class ZonaController extends HttpServlet {
     private final ZonaService zonaService = new ZonaService();
 
@@ -25,18 +25,18 @@ public class ZonaController extends HttpServlet {
 
         switch (option) {
             case "new":
-                req.getRequestDispatcher("/WEB-INF/views/formZona.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/formZona.jsp").forward(req, resp);
                 break;
             case "update":
                 int idUpd = Integer.parseInt(req.getParameter("id"));
                 ZonaForestal z = zonaService.findById(idUpd);
                 req.setAttribute("zona", z);
-                req.getRequestDispatcher("/WEB-INF/views/formZona.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/formZona.jsp").forward(req, resp);
                 break;
             case "delete":
                 int idDel = Integer.parseInt(req.getParameter("id"));
                 zonaService.delete(idDel);
-                resp.sendRedirect(req.getContextPath() + "/Zona");
+                resp.sendRedirect(req.getContextPath() + "/ZonaAdmin");
                 break;
             case "listarEspeciesZona":
                 int zonaIdEspecies = Integer.parseInt(req.getParameter("zonaId"));
@@ -45,12 +45,12 @@ public class ZonaController extends HttpServlet {
                 req.setAttribute("especiesZona", especiesZona);
                 List<ZonaForestal> todas = zonaService.findAll();
                 req.setAttribute("zonas", todas);
-                req.getRequestDispatcher("/WEB-INF/views/zonas.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/zonas.jsp").forward(req, resp);
                 return;
             default:
                 List<ZonaForestal> list = zonaService.findAll();
                 req.setAttribute("zonas", list);
-                req.getRequestDispatcher("/WEB-INF/views/zonas.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/zonas.jsp").forward(req, resp);
         }
     }
 
@@ -74,7 +74,7 @@ public class ZonaController extends HttpServlet {
         if (!errores.isEmpty()) {
             req.setAttribute("errores", errores);
             req.setAttribute("zona", zona);
-            req.getRequestDispatcher("/WEB-INF/views/formZona.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/Admin/formZona.jsp").forward(req, resp);
             return;
         }
 
@@ -83,6 +83,6 @@ public class ZonaController extends HttpServlet {
         } else {
             zonaService.update(zona);
         }
-        resp.sendRedirect(req.getContextPath() + "/Zona");
+        resp.sendRedirect(req.getContextPath() + "/ZonaAdmin");
     }
 }

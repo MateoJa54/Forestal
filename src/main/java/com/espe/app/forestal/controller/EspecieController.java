@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "EspecieController", urlPatterns = {"/Especie"})
+@WebServlet(name = "EspecieController", urlPatterns = {"/EspecieAdmin"})
 public class EspecieController extends HttpServlet {
     private final EspecieService especieService = new EspecieService();
 
@@ -23,23 +23,23 @@ public class EspecieController extends HttpServlet {
 
         switch (option) {
             case "new":
-                req.getRequestDispatcher("/WEB-INF/views/Especie.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/Especie.jsp").forward(req, resp);
                 break;
             case "update":
                 int idUpd = Integer.parseInt(req.getParameter("id"));
                 EspecieArbol e = especieService.findById(idUpd);
                 req.setAttribute("especie", e);
-                req.getRequestDispatcher("/WEB-INF/views/Especie.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/Especie.jsp").forward(req, resp);
                 break;
             case "delete":
                 int idDel = Integer.parseInt(req.getParameter("id"));
                 especieService.delete(idDel);
-                resp.sendRedirect(req.getContextPath() + "/Especie");
+                resp.sendRedirect(req.getContextPath() + "/EspecieAdmin");
                 break;
             default:  // getAll
                 List<EspecieArbol> list = especieService.findAll();
                 req.setAttribute("especies", list);
-                req.getRequestDispatcher("/WEB-INF/views/Especie.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/Admin/Especie.jsp").forward(req, resp);
         }
     }
 
@@ -66,7 +66,7 @@ public class EspecieController extends HttpServlet {
         if (!errores.isEmpty()) {
             req.setAttribute("errores", errores);
             req.setAttribute("especie", e);
-            req.getRequestDispatcher("/WEB-INF/views/Especie.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/Admin/Especie.jsp").forward(req, resp);
             return;
         }
 
@@ -75,6 +75,6 @@ public class EspecieController extends HttpServlet {
         } else {
             especieService.update(e);
         }
-        resp.sendRedirect(req.getContextPath() + "/Especie");
+        resp.sendRedirect(req.getContextPath() + "/EspecieAdmin");
     }
 }

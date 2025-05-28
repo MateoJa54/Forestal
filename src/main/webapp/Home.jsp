@@ -114,19 +114,20 @@
             <div class="user-panel">
                 <i class="bi bi-person-circle"></i>
                 <span>${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}</span>
-                <a href="${pageContext.request.contextPath}/Sesion">Cerrar sesión</a>
+              <a href="${pageContext.request.contextPath}/Logout">Cerrar sesión</a>
+
             </div>
         </c:if>
     </header>
 
     <!-- NAV -->
     <nav>
-        <a href="${pageContext.request.contextPath}/">Inicio</a>
-        <a href="${pageContext.request.contextPath}/Zona">Zonas Forestales</a>
-        <a href="${pageContext.request.contextPath}/Especie">Especies</a>
-        <a href="${pageContext.request.contextPath}/Actividad">Actividades</a>
+        <a href="${pageContext.request.contextPath}/Home">Inicio</a>
+        <a href="${pageContext.request.contextPath}/ZonaUser">Zonas Forestales</a>
+        <a href="${pageContext.request.contextPath}/EspecieUser">Especies</a>
+        <a href="${pageContext.request.contextPath}/ActividadUser">Actividades</a>
         <c:if test="${sessionScope.rol == 'administrador'}">
-            <a href="${pageContext.request.contextPath}/ZonaEspecie">Administración Especies</a>
+            <a href="${pageContext.request.contextPath}/ZonaEspecieAdmin">Administración Especies</a>
         </c:if>
     </nav>
 

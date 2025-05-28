@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -9,19 +10,136 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilo.css">
+                   <style>
+        .user-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+        }
+        .user-panel i {
+            font-size: 1.2rem;
+        }
+        .user-panel a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .user-panel a:hover {
+            text-decoration: underline;
+        }
+        .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #005C25;
+        color: white;
+        position: relative;
+    }
+    
+    .header-left {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        min-width: 0; /* Permite que el texto se trunque */
+    }
+    
+    .header img {
+        height: 50px;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+    
+    .header h1 {
+        margin: 0;
+        font-size: 1.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .user-panel {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 8px 15px;
+        border-radius: 20px;
+        margin-left: 15px;
+        flex-shrink: 0;
+    }
+    
+    .user-panel i {
+        font-size: 1.2rem;
+    }
+    
+    .user-panel span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+    
+    .user-panel a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+    
+    .user-panel a:hover {
+        text-decoration: underline;
+    }
+    
+    @media (max-width: 992px) {
+        .header {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 10px;
+        }
+        
+        .header-left {
+            margin-bottom: 10px;
+        }
+        
+        .user-panel {
+            align-self: flex-end;
+            margin-left: 0;
+        }
+    }
+    </style>
+    
     </head>
     <body>
-        <div class="header">
-            <img src="https://cdn-icons-png.flaticon.com/512/4275/4275503.png" alt="Logo Forestal">
-            <h1>SISTEMA DE REGISTRO FORESTAL - ZONAS</h1>
+         <div class="header">
+    <div class="header-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/4275/4275503.png" alt="Logo Forestal">
+        <h1>SISTEMA DE REGISTRO FORESTAL - ACTIVIDADES DE PROTECCIÓN</h1>
+    </div>
+    
+    <!-- Panel de usuario para cerrar sesión -->
+    <c:if test="${not empty sessionScope.usuario}">
+        <div class="user-panel">
+            <i class="bi bi-person-circle"></i>
+            <span>${sessionScope.usuario.nombre}</span>
+           <a href="${pageContext.request.contextPath}/Logout">Cerrar sesión</a>
+
         </div>
+    </c:if>
+</div>
         <div class="main-content">
             <div class="sidebar">
-                <button onclick="location.href = '${pageContext.request.contextPath}/Home'">Home</button>
-                <button onclick="location.href = '${pageContext.request.contextPath}/Zona'">Zonas Forestales</button>
-                <button onclick="location.href = '${pageContext.request.contextPath}/Especie'">Especies de Árboles</button>
-                <button onclick="location.href = '${pageContext.request.contextPath}/Actividad'">Actividades de Conservación</button>
-                <button onclick="location.href = '${pageContext.request.contextPath}/ZonaEspecie'">Adminsitracion Especie</button>
+                <button onclick="location.href = '${pageContext.request.contextPath}/ZonaAdmin'">Zonas Forestales</button>
+                <button onclick="location.href = '${pageContext.request.contextPath}/EspecieAdmin'">Especies de Árboles</button>
+                <button onclick="location.href = '${pageContext.request.contextPath}/ActividadAdmin'">Actividades de Conservación</button>
+                <button onclick="location.href = '${pageContext.request.contextPath}/ZonaEspecieAdmin'">Adminsitracion Especie</button>
 
             </div>
 
@@ -42,7 +160,7 @@
                     <div class="modal-content p-4 bg-light rounded shadow">
                         <span class="btn-close float-end" onclick="document.getElementById('zonaModal').style.display = 'none'"></span>
                         <h2>Registrar nueva zona forestal</h2>
-                        <form action="${pageContext.request.contextPath}/Zona" method="post">
+                        <form action="${pageContext.request.contextPath}/ZonaAdmin" method="post">
                             <input type="hidden" name="option" value="new" />
                             <div class="mb-3">
                                 <label class="form-label">Nombre:</label>
@@ -78,7 +196,7 @@
                     <div class="modal-content p-4 bg-light rounded shadow">
                         <span class="btn-close float-end" onclick="document.getElementById('editZonaModal').style.display = 'none'"></span>
                         <h2>Editar zona forestal</h2>
-                        <form action="${pageContext.request.contextPath}/Zona" method="post">
+                        <form action="${pageContext.request.contextPath}/ZonaAdmin" method="post">
                             <input type="hidden" name="option" value="update" />
                             <input type="hidden" name="zonaId" id="editZonaId" />
                             <div class="mb-3">
@@ -210,11 +328,11 @@
                                         </button>
                                         <!-- Ver Especies -->
                                         <button class="btn btn-sm " style="background-color:#006837; color: white"
-                                                onclick="location.href = '${pageContext.request.contextPath}/Zona?option=listarEspeciesZona&zonaId=${zona.zonaId}'">
+                                                onclick="location.href = '${pageContext.request.contextPath}/ZonaAdmin?option=listarEspeciesZona&zonaId=${zona.zonaId}'">
                                             <i class="bi bi-tree"></i>
                                         </button>
                                         <!-- Eliminar -->
-                                        <form action="${pageContext.request.contextPath}/Zona" method="get" style="display:inline;">
+                                        <form action="${pageContext.request.contextPath}/ZonaAdmin" method="get" style="display:inline;">
                                             <input type="hidden" name="option" value="delete"/>
                                             <input type="hidden" name="id" value="${zona.zonaId}" />
                                             <button class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta zona?');">

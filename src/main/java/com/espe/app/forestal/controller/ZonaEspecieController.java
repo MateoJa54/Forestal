@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-@WebServlet(name = "ZonaEspecieController", urlPatterns = {"/ZonaEspecie"})
+@WebServlet(name = "ZonaEspecieController", urlPatterns = {"/ZonaEspecieAdmin"})
 public class ZonaEspecieController extends HttpServlet {
     private final ZonaEspecieService zeService = new ZonaEspecieService();
     private final ZonaService zonaService = new ZonaService();
@@ -30,7 +30,7 @@ public class ZonaEspecieController extends HttpServlet {
             int zonaId = Integer.parseInt(req.getParameter("zonaId"));
             int espId = Integer.parseInt(req.getParameter("especieId"));
             zeService.delete(zonaId, espId);
-            resp.sendRedirect(req.getContextPath() + "/ZonaEspecie?zonaId=" + zonaId);
+            resp.sendRedirect(req.getContextPath() + "/ZonaEspecieAdmin?zonaId=" + zonaId);
             return;
         }
 
@@ -55,7 +55,7 @@ public class ZonaEspecieController extends HttpServlet {
         }
 
         // Forward a la JSP
-        req.getRequestDispatcher("/WEB-INF/views/zonaEspecie.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/Admin/zonaEspecie.jsp").forward(req, resp);
     }
 
     @Override
@@ -65,6 +65,6 @@ public class ZonaEspecieController extends HttpServlet {
         int especieId = Integer.parseInt(req.getParameter("especieId"));
         BigDecimal densidad = new BigDecimal(req.getParameter("densidad"));
         zeService.save(zonaId, especieId, densidad);
-        resp.sendRedirect(req.getContextPath() + "/ZonaEspecie?zonaId=" + zonaId);
+        resp.sendRedirect(req.getContextPath() + "/ZonaEspecieAdmin?zonaId=" + zonaId);
     }
 }
