@@ -139,6 +139,7 @@
                 <button onclick="location.href = '${pageContext.request.contextPath}/EspecieAdmin'">Especies de Árboles</button>
                 <button onclick="location.href = '${pageContext.request.contextPath}/ActividadAdmin'">Actividades de Conservación</button>
                 <button onclick="location.href = '${pageContext.request.contextPath}/ZonaEspecieAdmin'">Adminsitracion Especie</button>
+                <button onclick="location.href='${pageContext.request.contextPath}/UsuarioAdmin'">Administración Usuarios</button>
             </div>
 
             <div class="main">

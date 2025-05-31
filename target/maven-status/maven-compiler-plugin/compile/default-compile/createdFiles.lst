@@ -1,12 +1,10 @@
 com\espe\app\forestal\dao\EspecieDao.class
-com\espe\app\forestal\webService\dto\EspecieZonaDetalleRequest.class
 com\espe\app\forestal\controller\SesionController.class
 com\espe\app\forestal\controller\EspecieController.class
 com\espe\app\forestal\model\EspecieArbol.class
 com\espe\app\forestal\controller\EspecieUserController.class
 com\espe\app\forestal\dao\TestZonaEspecieDaoJdbc.class
 com\espe\app\forestal\model\Usuario.class
-com\espe\app\forestal\webService\dto\ZonaResponse.class
 com\espe\app\forestal\model\EstadoConservacion.class
 com\espe\app\forestal\service\UsuarioService.class
 com\espe\app\forestal\controller\ActividadUserController.class
@@ -14,11 +12,11 @@ com\espe\app\forestal\resources\JakartaEE10Resource.class
 com\espe\app\forestal\dao\TestUsuarioDao.class
 com\espe\app\forestal\security\util\PasswordEncoder.class
 com\espe\app\forestal\dao\TestActividadDao.class
-com\espe\app\forestal\webService\dto\EspecieZonaDetalleResponse.class
 com\espe\app\forestal\controller\UserController.class
 com\espe\app\forestal\dao\ActividadDao.class
 com\espe\app\forestal\JakartaRestConfiguration.class
 com\espe\app\forestal\model\EspecieZonaDetalle.class
+com\espe\app\forestal\controller\UsuarioAdminController.class
 com\espe\app\forestal\controller\LogoutServlet.class
 com\espe\app\forestal\dao\ZonaEspecieDao.class
 com\espe\app\forestal\service\ZonaEspecieService.class
@@ -31,7 +29,6 @@ com\espe\app\forestal\model\ZonaForestal.class
 com\espe\app\forestal\service\AuthService.class
 com\espe\app\forestal\model\ZonaEspecie.class
 com\espe\app\forestal\model\EstadoActividad.class
-com\espe\app\forestal\webService\config\SoapWebServiceConfig.class
 com\espe\app\forestal\security\filter\AuthenticationFilter.class
 com\espe\app\forestal\service\ZonaService.class
 com\espe\app\forestal\security\listener\SessionListener.class
@@ -44,11 +41,9 @@ com\espe\app\forestal\controller\ActividadController.class
 com\espe\app\forestal\controller\HomeController.class
 com\espe\app\validator\ZonaValidator.class
 com\espe\app\forestal\controller\ZonaController.class
-com\espe\app\forestal\webService\dto\ZonaRequest.class
+com\espe\app\forestal\service\UsuarioAdminService.class
 com\espe\app\forestal\model\ActividadConservacion.class
-com\espe\app\forestal\security\filter\AuthorizationFilter.class
 com\espe\app\forestal\service\ActividadService.class
 com\espe\app\validator\EspecieValidator.class
-com\espe\app\forestal\webService\endpoint\ZonaEndpoint.class
 com\espe\app\forestal\model\RolUsuario.class
 com\espe\app\forestal\model\ZonaEspecieId.class

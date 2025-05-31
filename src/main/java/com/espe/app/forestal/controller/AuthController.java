@@ -69,7 +69,7 @@ public class AuthController extends HttpServlet {
             if (user.getRol() == RolUsuario.administrador) {
                 resp.sendRedirect(req.getContextPath() + "/ZonaAdmin");
             } else {
-                resp.sendRedirect(req.getContextPath() + "/ZonaUser");
+                resp.sendRedirect(req.getContextPath() + "/Home");
             }
 
         } else {
