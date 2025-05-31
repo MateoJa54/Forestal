@@ -25,13 +25,16 @@ com\espe\app\validator\ActividadValidator.class
 com\espe\app\forestal\dao\TestZonaDao.class
 com\espe\app\forestal\dao\ZonaDao.class
 com\espe\app\forestal\dao\util\ConnectionBdd.class
+com\espe\app\forestal\resources\EspecieWebServiceImpl.class
 com\espe\app\forestal\model\ZonaForestal.class
 com\espe\app\forestal\service\AuthService.class
+com\espe\app\forestal\resources\EspecieWebService.class
 com\espe\app\forestal\model\ZonaEspecie.class
 com\espe\app\forestal\model\EstadoActividad.class
 com\espe\app\forestal\security\filter\AuthenticationFilter.class
 com\espe\app\forestal\service\ZonaService.class
 com\espe\app\forestal\security\listener\SessionListener.class
+com\espe\app\forestal\Publicador.class
 com\espe\app\forestal\dao\TestEspecieDao.class
 com\espe\app\forestal\controller\ZonaUserController.class
 com\espe\app\forestal\service\EspecieService.class
